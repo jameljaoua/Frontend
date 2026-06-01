@@ -1,0 +1,19 @@
+
+<div class="details-container" *ngIf="download">
+  <div class="product-card">
+
+    <div class="info-section">
+      <h1>Download Details</h1>
+     <div> User : <span class="category-badge">{{download.userName}}</span></div>
+     <div> Product : <span class="category-badge">{{download.productName}}</span></div>
+        <p>Date: {{download.dateDownload | date:'dd/MM/yyyy'}}</p>
+
+      
+      <!-- Ajoutez un bouton de retour -->
+      <button mat-raised-button color="primary" [routerLink]="'/admin/downloads'">
+        <mat-icon>arrow_back</mat-icon>
+        Back to Downloads
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<!-- chat-bot.component.html -->
+<div class="chatbot-container">
+  <!-- Bouton flottant -->
+  <button class="chatbot-toggle" (click)="toggleChat()">
+    <mat-icon>{{ isOpen ? 'close' : 'chat' }}</mat-icon>
+  </button>
+
+  <!-- Fenêtre de chat -->
+  <div class="chatbot-window" [class.open]="isOpen">
+    <div class="chatbot-header">
+      <div class="header-info">
+        <mat-icon>smart_toy</mat-icon>
+        <div>
+          <h3>Assistant Commercial</h3>
+          <p>En ligne • Réponse immédiate</p>
+        </div>
+      </div>
+      <button class="close-btn" (click)="toggleChat()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div class="chat-messages" #chatMessages>
+      <div *ngFor="let message of messages" 
+           class="message" 
+           [class.user-message]="message.isUser" 
+           [class.bot-message]="!message.isUser">
+        
+        <div class="message-content">
+          <div class="message-text">{{ message.text }}</div>
+          <div class="message-time">{{ formatTime(message.timestamp) }}</div>
+        </div>
+
+        <!-- Suggestions de produits -->
+        <div *ngIf="!message.isUser && message.suggestions && message.suggestions.length > 0" 
+             class="suggestions-container">
+          <div class="suggestion-title">🛍️ Produits suggérés :</div>
+          <div class="suggestions-grid">
+            <div *ngFor="let product of message.suggestions" class="product-card">
+              <img [src]="product.imageUrl || 'assets/images/placeholder.jpg'" 
+                   [alt]="product.name_prod"
+                   class="product-image">
+              <div class="product-info">
+                <h4>{{ product.name_prod }}</h4>
+                <p class="product-price">{{ product.price | currency:'USD' }}</p>
+                <button class="view-btn" [routerLink]="['/product', product.id]">
+                  Voir
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Indicateur de chargement -->
+      <div *ngIf="isLoading" class="message bot-message">
+        <div class="message-content">
+          <div class="typing-indicator">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-input">
+      <input type="text" 
+             [(ngModel)]="newMessage" 
+             (keyup.enter)="sendMessage()"
+             placeholder="Écrivez votre message..."
+             [disabled]="isLoading">
+      <button (click)="sendMessage()" [disabled]="!newMessage.trim() || isLoading">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

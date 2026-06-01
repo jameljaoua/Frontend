@@ -1,0 +1,42 @@
+<!-- En-tête pour inclure Boxicons, déjà installé via npm -->
+<div class="auth">
+<div class="container" [class.active]="isActive">
+    <!-- Formulaire de Login (connexion) -->
+    <div class="form-box login">
+        <form (ngSubmit)="onLoginSubmit()" [formGroup]="loginForm">
+            <h1>Login</h1><br/>
+            <div class="input-box">
+                <input type="email" placeholder="Email" formControlName="email" required>
+                <i class='bx bxs-envelope'></i>
+            </div>
+            <div class="input-box">
+                <input [type]="hidePassword ? 'password' : 'text'" placeholder="Password" formControlName="password" required>
+                <i class='bx bxs-lock-alt' (click)="togglePasswordVisibility()" style="cursor: pointer;"></i>
+            </div>
+            <!--
+            <div class="forgot-link">
+                <a href="#">Forgot Password?</a>
+            </div>-->
+            <button type="submit" class="btn" [disabled]="loginForm.invalid">Login</button>
+
+        </form>
+    </div>
+
+
+
+    <!-- Panneau de bascule (Toggle Box) -->
+    <div class="toggle-box">
+        <div class="toggle-panel toggle-left">
+            <h1>Hello, Welcome!</h1>
+            <p>Don't have an account?</p>
+            <button class="btn register-btn" (click)="showRegister()">Register</button>
+        </div>
+
+        <div class="toggle-panel toggle-right">
+            <h1>Welcome Back!</h1>
+            <p>Already have an account?</p>
+            <button class="btn login-btn" (click)="showLogin()">Login</button>
+        </div>
+    </div>
+</div>
+</div>

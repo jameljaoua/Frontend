@@ -1,0 +1,54 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+
+    <h3 class="card-title">Orders List</h3>
+  </div>
+  <div class="card-body table-responsive p-0">
+    <table class="table table-hover text-nowrap">
+      <thead class="table-light">
+        <tr>
+          <th>User Name</th>
+          <th>Amount</th>
+          <th>Description</th>
+          <th>Phone</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th width="150">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let order of orders">
+
+
+
+          <td>{{ order.userName }}</td>
+
+          <td>{{ order.amount }}</td>
+
+          <td>{{ order.orderDescription }}</td>
+
+          <td>{{ order.phone }}</td>
+
+          <td>{{ order.date | date:'dd/MM/yyyy' }}</td>
+          <td> <ng-container [ngSwitch]="order.orderStatus">
+  <span *ngSwitchCase="'Pending'" class="badge bg-warning text-dark">Pending</span>
+  <span *ngSwitchCase="'Placed'" class="badge bg-info text-dark">Placed</span>
+  <span *ngSwitchCase="'Purchased'" class="badge bg-success">Purchased</span>
+        </ng-container></td>
+          <td>
+            <a class="btn btn-sm btn-info me-1"
+               [routerLink]="['/admin/order', order.id, 'details']">
+              <i class="bi bi-eye"></i>
+            </a>
+           <button class="btn btn-sm btn-danger"
+                    (click)="deleteOrder(order.id)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,111 @@
+<div class="container">
+        <h2>Add Product</h2>
+    <form [formGroup]="productForm" (ngSubmit)="addProduct()">
+        <div class="file-upload-container">
+            <label class="file-upload-label">
+                <span> Select a File </span>
+                    <input type="file" 
+                           id="imageFileInput"
+                           (change)="onImageSelected($event)" 
+                           accept="image/*"
+                           hidden>
+                <mat-icon>attach-file</mat-icon>
+            </label>
+            <div  *ngIf="selectedImage" class="image-preview">
+                <div class="circle-image">
+                    <img [src]="imagePreview" alt="selected Image" class="preview-image">
+                    <button type="button" class="btn-remove" (click)="clearImage()" title="Remove image">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+        
+        <!-- SECTION 2: Upload du fichier produit (obligatoire) -->
+        <div class="upload-section highlight">
+            <h3 >
+                <mat-icon>cloud_upload</mat-icon> 
+                Product File 
+            </h3>
+            
+            <div class="file-upload-container">
+                <label class="file-upload-label primary">
+                    <mat-icon>attach_file</mat-icon>
+                    <span>Choose Product File</span>
+                    <input type="file" 
+                           id="productFileInput"
+                           (change)="onProductFileSelected($event)" 
+                           [accept]="acceptedFileTypes"
+                           hidden>
+                </label>
+                
+                <!-- Affichage du fichier sélectionné -->
+                <div *ngIf="selectedProductFile" class="file-info">
+                    <div class="file-details">
+                        <mat-icon class="file-icon">insert_drive_file</mat-icon>
+                        <div class="file-meta">
+                            <span class="file-name">{{ productFileName }}</span>
+                            <span class="file-size">{{ productFileSize }}</span>
+                        </div>
+                        <button type="button" class="btn-remove" (click)="clearProductFile()" title="Remove file">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                
+                <div *ngIf="!selectedProductFile" class="file-placeholder">
+                    <mat-icon class="placeholder-icon">cloud_upload</mat-icon>
+                    <p>No file selected. Please choose a product file.</p>
+                </div>
+            </div>
+        </div>
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Select a category</mat-label>
+            <mat-select formControlName="categoryId" name="categoryId">
+                <mat-option *ngFor="let category of listOfCategories" [value]="category.id">
+                    {{category.name_cat}}
+                </mat-option>
+
+            </mat-select>
+            <mat-error *ngIf="productForm.get('categoryId')?.hasError('required')">
+                This Input is required!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field" *ngIf="listOfSubCategories.length > 0">
+            <mat-label>Select a sub-category (Optional)</mat-label>
+            <mat-select formControlName="subcategoryId">
+                <mat-option [value]="null">None</mat-option> <mat-option *ngFor="let sub of listOfSubCategories" [value]="sub.id">
+                    {{sub.name_subcat}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Name Of Product</mat-label>
+            <input matInput type="text" placeholder="Name" formControlName="name_prod">
+            <mat-error *ngIf="productForm.get('name_prod')?.hasError('required')">
+                This Input is required!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Price </mat-label>
+            <input matInput type="number" placeholder="Price" formControlName="price">
+            <mat-error *ngIf="productForm.get('price')?.hasError('required')">
+                This Input is required!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Description</mat-label>
+            <textarea matInput  placeholder="Description" formControlName="description_prod"></textarea>
+            <mat-error *ngIf="productForm.get('description_prod')?.hasError('required')">
+                This Input is required!
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Product Code (Optional)</mat-label>
+            <textarea matInput placeholder="Product Code" formControlName="code_prod"></textarea>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Add Product</button>
+
+    </form>
+</div>

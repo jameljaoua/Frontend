@@ -1,0 +1,115 @@
+ <section class="checkout-section">
+      <div class="container mt-50 px-4">
+            <form action="#">
+                        <div class="row mt-50">
+                            <div class="col-lg-8">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <h4 class="title-2 mb-4">Billing Details</h4>
+                                        <div class="checkout-info">
+
+                                            <h6>Personal Information</h6>
+                                            <div class="row" *ngIf="profileForm">
+                                                <div class="col-md-6 mb-4">
+                                                    <div class="input-item input-item-name gs_input_area">
+                                                        <input type="text" name="name" placeholder=" Name:" [(ngModel)]="profileForm.name">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6 mb-4">
+                                                    <div class="input-item input-item-email gs_input_area">
+                                                        <input type="email" name="email" placeholder="Email Address:" [(ngModel)]="profileForm.email">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-4">
+                                                    <div class="input-item input-item-phone gs_input_area" >
+                                                        <input type="text" name="gs_phone" placeholder="Phone Number:"  [value]="profileForm?.phone || ''">
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                            <div class="col-lg-12 shipping-details">
+                            <h4 class="title-2 mb-4">Card Details</h4>
+                            <div class="checkout-info">
+                                <div id="card-element" class="form-control" style="padding: 10px; height: 45px;">
+                                </div>
+                                <div id="card-errors" role="alert" class="text-danger small mt-2"></div>
+                            </div>
+                            </div>
+
+                                </div>
+
+                            </div>
+                            <div class="col-lg-4 mt-5">
+                                <div class="card bg-white">
+                                    <div class="card-header bg-white px-4">
+                                        <h2>Your Order</h2>
+                                    </div>
+                                    <div class="card-body p-0">
+
+                                        <div class="d-flex justify-content-between mt-2 border-t">
+                                            <span class="p-summary-total-title">Total Amount</span>
+                                            <span class="p-summary-total-price">{{totalAmount | currency}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="card mt-4">
+                                    <div class="card-header bg-white px-4">
+                                        <h2>Payment Method</h2>
+                                    </div>
+                                    <div class="border-top border-width-3 border-color-1 pt-3 mb-3">
+                                        <!-- Basics Accordion -->
+
+
+                                        <!-- Card -->
+                                        <div class="accordion" id="basicsAccordion2">
+                                            <div class="border-bottom border-color-1 border-dotted-bottom">
+                                                <div class="p-3" id="basicsHeadingFour">
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio" class="custom-control-input" id="FourstylishRadio2" name="stylishRadio">
+                                                        <label class="custom-control-label form-label" for="FourstylishRadio2" data-bs-toggle="collapse" data-bs-target="#basicsCollapseTwo" aria-expanded="true" aria-controls="basicsCollapseTwo">
+                                                            Check payments
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div id="basicsCollapseTwo" class="accordion-collapse collapse" aria-labelledby="basicsHeadingFour" data-bs-parent="#basicsAccordion2">
+                                                    <div class="px-4 py-2">
+                                                        Please send a check to Store Name, Store Street, Store Town,
+                                                        Store State / County, Store Postcode.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Card -->
+
+
+
+
+                                        <!-- End Basics Accordion -->
+                                    </div>
+                                    <div class="form-group d-flex align-items-center justify-content-between px-3">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck10" required="" data-msg="Please agree terms and conditions." data-error-class="u-has-error" data-success-class="u-has-success">
+                                            <label class="form-check-label form-label" for="defaultCheck10">
+                                                I have read and agree to the website <a href="#" class="text-blue">terms
+                                                    and conditions </a>
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="checkout-btn mx-3 my-4">
+                                        <button type="button" (click)="pay()" [disabled]="isProcessing" class="btn btn-primary btn-lg w-100">
+                                            {{ isProcessing ? 'Processing...' : 'Pay ' + (totalAmount | currency) }}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+      </div>
+    </section>

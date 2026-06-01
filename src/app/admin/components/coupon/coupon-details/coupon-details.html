@@ -1,0 +1,24 @@
+
+<div class="details-container" *ngIf="coupon">
+  <div class="product-card">
+
+    <div class="info-section">
+      <H1>Coupon Details</H1>
+      <p>Name : {{coupon.name_cpn}}</p>
+      <p >Code : {{coupon.code_cpn}}</p>
+      
+      <div class="price-row">
+        <span class="price-label">Discount:</span>
+        <span class="price-value">{{ coupon.discount }} %</span>
+      </div>
+      <div class="price-row">
+        <span class="price-label">Expiration Date:</span>
+        <span class="price-value">{{coupon.expirationDate | date:'dd/MM/yyyy'}}</span>
+      <!-- Ajoutez un bouton de retour -->
+      <button mat-raised-button color="primary" [routerLink]="'/admin/coupons'">
+        <mat-icon>arrow_back</mat-icon>
+        Back to Coupons
+      </button>
+    </div>
+  </div>
+</div>

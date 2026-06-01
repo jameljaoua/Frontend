@@ -1,0 +1,45 @@
+<div class="details-container">
+  <div class="product-card">
+    <div class="products-list-section">
+      <h2 class="section-title">Billing Details</h2>
+      
+      <div *ngFor="let product of orderedProductsDetailsList" class="product-item">
+        <div class="image-wrapper">
+          <img [src]="product.processedImg" alt="{{product.name_prod}}">
+        </div>
+           <div *ngIf="product.hasFile" class="file-info">
+              <span class="file-name" [title]="product.productFileName">
+                {{ product.productFileName | slice:0:15 }}{{ product.productFileName?.length > 15 ? '...' : '' }}
+              </span>
+            <button class="btn btn-sm btn-outline-primary"
+                    (click)="downloadProductFile(product.id, product.productFileName)"
+                    title="Download file"
+                    [disabled]="!product.productFileName">
+                <i class="bi bi-download"></i>
+              </button>
+            </div>
+        <div class="info-wrapper">
+          <h3 class="product-name">{{product.name_prod}}</h3>
+          <div class="item-details">
+            <span class="detail-badge">Prix: {{product.price | currency}}</span>
+            <span class="detail-badge">Quantité: {{product.quantity}}</span>
+            <span *ngIf="product.code_prod" class="detail-badge">Code: {{ product.code_prod }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-section">
+      <div class="total-box">
+        <span class="total-label">Total Amount</span>
+        <span class="total-value">{{totalAmount | currency}}</span>
+      </div>
+      
+      <button mat-flat-button color="primary" class="back-button" [routerLink]="'/customer/my-orders'">
+        <mat-icon>arrow_back</mat-icon>
+        Back to Orders
+      </button>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,29 @@
+           <!-- Sidebar -->
+                <div class="profile-section">
+                    <img [src]="userImg ?  userImg : 'assets/img/default-avatar.png'" alt="Profile" class="profile-img">
+                    <h5>{{ userName }}</h5>
+                    <p class="text-muted">{{ userRole }}</p>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" routerLink="/customer/dashboard" routerLinkActive="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/customer/my-orders" routerLinkActive="active"><i class="fas fa-shopping-bag"></i> Orders</a>
+                    </li>
+  
+      
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/customer/profile"  routerLinkActive="active" data-page="profile"><i class="fas fa-user"></i> Profile Details</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/customer/billing" routerLinkActive="active" data-page="Billing"><i class="fas fa-credit-card"></i> Billing</a>
+                    </li>
+                          <li class="nav-item">
+                        <a class="nav-link" routerLink="/customer/my-notifications" routerLinkActive="active" data-page="Notifications"><i class="fas fa-bell"></i> Notifications</a>
+                    </li>
+      
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </li>
+                </ul>

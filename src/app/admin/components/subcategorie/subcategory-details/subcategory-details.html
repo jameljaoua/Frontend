@@ -1,0 +1,114 @@
+<!-- Loading State -->
+<div class="container mt-4" *ngIf="isLoading">
+  <div class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-3 text-muted">Loading subcategory details...</p>
+  </div>
+</div>
+
+<!-- Subcategory Details -->
+<div class="container mt-4" *ngIf="!isLoading && subcategory">
+  <!-- En-tête de la sous-catégorie -->
+  <div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">Subcategory Details</h4>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+        <div> Category : <span class="category-badge">{{subcategory.categoryName}}</span></div>
+
+          <h2 class="mb-3">Name : {{ subcategory.name_subcat }}</h2>
+          <p class="lead">Description : {{ subcategory.description_subcat }}</p>
+          
+          <div class="mt-3">
+            <span class="badge bg-info fs-6">
+              Total Products: {{ products.length }}
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-4">
+        <button class="btn btn-secondary" [routerLink]="'/admin/subcategories'">
+          <i class="bi bi-arrow-left me-2"></i>Back to Subcategories
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Liste des produits -->
+  <div class="card">
+    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Products in this SubCategory</h5>
+
+    </div>
+    
+    <div class="card-body">
+      <!-- Message si aucun produit -->
+      <div *ngIf="products.length === 0" class="text-center py-4">
+        <i class="bi bi-box-seam text-muted" style="font-size: 3rem;"></i>
+        <p class="text-muted mt-3">No products found in this subcategory</p>
+        <a class="btn btn-outline-primary btn-sm" [routerLink]="'/admin/add-product'">
+          Add your first product
+        </a>
+      </div>
+
+      <!-- Grille des produits -->
+      <div *ngIf="products.length > 0" class="row g-3">
+        <div *ngFor="let product of products" class="col-md-4 col-lg-3">
+          <div class="card h-100 product-card">
+            <!-- Image du produit -->
+            <div class="product-image-wrapper">
+              <img [src]="product.processedImg || 'assets/images/placeholder.jpg'" 
+                   class="card-img-top product-img" 
+                   [alt]="product.name_prod"
+                   onerror="this.src='assets/images/placeholder.jpg'">
+            </div>
+            
+            <!-- Détails du produit -->
+            <div class="card-body">
+              <h6 class="card-title text-truncate" title="{{ product.name_prod }}">
+                {{ product.name_prod }}
+              </h6>
+              <p class="card-text small text-muted text-truncate" 
+                 title="{{ product.description_prod }}">
+                {{ product.description_prod || 'No description' }}
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold text-primary">
+                  {{ product.price | currency }}
+                </span>
+                <span class="badge bg-secondary">{{ product.categoryName }}</span>
+                <span class="badge bg-info">{{ product.subcategoryName }}</span>
+              </div>
+            </div>
+            
+            <!-- Actions -->
+            <div class="card-footer bg-transparent d-flex justify-content-between">
+              <a class="btn btn-sm btn-outline-info" 
+                 [routerLink]="['/admin/product', product.id, 'details']">
+                <i class="bi bi-eye"></i>
+              </a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Error State -->
+<div class="container mt-4" *ngIf="!isLoading && !subcategory">
+  <div class="text-center py-5">
+    <i class="bi bi-exclamation-triangle text-warning" style="font-size: 3rem;"></i>
+    <h4 class="mt-3">Subcategory not found</h4>
+    <p class="text-muted">The subcategory you're looking for doesn't exist.</p>
+    <button class="btn btn-primary mt-3" [routerLink]="'/admin/subcategories'">
+      <i class="bi bi-arrow-left me-2"></i>Back to Subcategories
+    </button>
+  </div>
+</div>

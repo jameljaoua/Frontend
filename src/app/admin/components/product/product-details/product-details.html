@@ -1,0 +1,37 @@
+
+<div class="details-container" *ngIf="product">
+  <div class="product-card">
+    <div class="image-section">
+      <img [src]="product.processedImg" alt="{{product.name_prod}}">
+    </div>
+
+    <div class="info-section">
+      <h1>Product Details</h1>
+     <div> Category : <span class="category-badge">{{product.categoryName}}
+              <small *ngIf="product.subcategoryName" class="text-muted">
+            <i class="bi bi-arrow-return-right"></i> {{ product.displaySubCategory }}
+          </small>
+          
+          <small *ngIf="!product.subcategoryName" class="text-lowercase text-secondary" style="font-size: 0.75rem;">
+            (no sub-cat)
+          </small>
+     </span></div>
+      <p>Name : <strong>{{product.name_prod}}</strong></p>
+      <p class="description">Description : {{product.description_prod}}</p>
+      
+      <div class="price-row">
+        <span class="price-label">Price:</span>
+        <span class="price-value">{{product.price | currency}}</span>
+      </div>
+      <div *ngIf="product.code_prod" class="code-row">
+        <span class="code-label">Product Code:</span>
+        <span class="code-value">{{product.code_prod || 'N/A'}}</span>
+      </div>
+      <!-- Ajoutez un bouton de retour -->
+      <button mat-raised-button color="primary" [routerLink]="'/admin/products'">
+        <mat-icon>arrow_back</mat-icon>
+        Back to Products
+      </button>
+    </div>
+  </div>
+</div>

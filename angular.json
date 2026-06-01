@@ -25,7 +25,34 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/material-theme.scss",
+              "src/styles.css",
+              "public/admin/css/adminlte.css",
+              "public/admin/css/adminlte.min.css",
+              "public/admin/css/adminlte.rtl.css",
+              "public/admin/css/adminlte.rtl.min.css",
+              "public/pubcl/css/style.css",
+            "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
+            "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "node_modules/bootstrap-icons/font/bootstrap-icons.css",
+            "node_modules/nice-select2/dist/css/nice-select2.css",
+            "node_modules/nouislider/dist/nouislider.min.css",
+            "node_modules/boxicons/css/boxicons.min.css"
+
+            ],
+            "scripts": [
+              "node_modules/nice-select2/dist/js/nice-select2.js",
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "public/admin/js/adminlte.js",
+              "public/admin/js/adminlte.min.js",
+              "public/pubcl/js/main.js",
+              "node_modules/nouislider/dist/nouislider.min.js",
+              "public/pubcl/js/owl.carousel.min.js",
+               "node_modules/jquery/dist/jquery.min.js"
+
             ]
           },
           "configurations": {

@@ -1,0 +1,119 @@
+<section class="cart-section px-3" *ngIf="cartItems.length > 0; else emptyCart">
+  <div class="container mt-50 px-4">
+    <div class="mb-6 row">
+      <div class="col-12 col-lg-7 mb-4 mb-lg-0">
+        <div class="mb-4 row d-none d-lg-block">
+          <div class="col-lg-12">
+            <div class="row">
+              <div class="col-lg-4"><b>Product</b></div>
+              <div class="col-lg-2"><b>Price</b></div>
+              <div class="col-lg-3"><b>Quantity</b></div>
+              <div class="col-lg-3"><b>Total</b></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="products mt-3">
+          <div *ngFor="let item of cartItems" class="position-relative product-item row mb-4 rounded-lg bg-white pt-3 shadow-sm mr-1">
+            
+            <div class="col-12 col-sm-6 col-lg-4 mb-3 mb-sm-3 mb-md-3 md-lg-0">
+              <b class="mb-2 d-block d-xl-none">Product</b>
+              <div class="d-flex w-100">
+                <figure class="rounded-lg">
+                  <img [src]="item.processedImg" class="rounded" width="60" alt="img">
+                </figure>
+                <div class="ml-2 w-100">
+                  <a class="font-weight-bold text-dark" [ngClass]="{'highlight': item.highlighted}">
+                    {{ item.productName }}
+                  </a>
+    
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-2 mb-3 mb-sm-3 mb-md-3 md-lg-0">
+              <b class="mb-2 d-block d-xl-none">Price</b>
+              <div>
+                <span class="font-weight-bold text-primary">{{ item.price | currency }}</span>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3 mb-3 mb-sm-3 mb-md-3 md-lg-0">
+              <b class="mb-2 d-block d-xl-none">Quantity</b>
+              <div class="qty-container">
+                <button class="qty-btn-minus count-decreament" type="button" 
+                        [disabled]="item.quantity == 1" 
+                        (click)="decreaseQuantity(item.productId)">
+                  <mat-icon style="font-size: 16px; height: 16px; width: 16px;">remove</mat-icon>
+                </button>
+                <input type="number" name="qty" [value]="item.quantity" class="input-qty input-cornered" readonly>
+                <button class="qty-btn-plus count-increament" type="button" 
+                        (click)="increaseQuantity(item.productId)">
+                  <mat-icon style="font-size: 16px; height: 16px; width: 16px;">add</mat-icon>
+                </button>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3 mb-3 mb-sm-3 mb-md-3 md-lg-0">
+              <b class="mb-2 d-block d-xl-none">Total</b>
+              <span class="font-weight-bold text-primary">{{ (item.price * item.quantity) | currency }}</span>
+            </div>
+
+            <button class="btn btn-primary position-absolute close-cart" (click)="removeProduct(item.productId)" style="width:auto">
+              <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-5 ps-lg-5">
+        <div class="delivery-summary">
+          <div class="mb-4 box-title d-flex flex-wrap align-items-center justify-content-between border-bottom-2 pb-1">
+            <h1 class="h4 font-weight-bold text-dark position-relative m-0 mb-1 title-under-line">
+              Order Summary
+            </h1>
+          </div>
+
+          <form class="d-flex" [formGroup]="couponForm" (ngSubmit)="applyCoupon()" *ngIf="order.couponName == null">
+            <div class="position-relative w-100">
+              <input type="text" formControlName="code_cpn" class="form-control rounded-0" placeholder="Promo code">
+            </div>
+            <button class="btn btn-primary apply-coupon text-white rounded-0" type="submit" [disabled]="couponForm.invalid">Apply</button>
+          </form>
+
+          <div class="mt-4 bg-white p-3 shadow-sm">
+            <ul class="list-unstyled">
+              <li class="d-flex justify-content-between mb-2">
+                Items <span>{{ order.amount | currency }}</span>
+              </li>
+              
+              <li class="d-flex justify-content-between mb-2" *ngIf="order.couponName != null">
+                Discount ({{ order.couponName }}) 
+                <span class="text-danger">-{{ (order.amount - order.totalAmount) | currency }}</span>
+              </li>
+
+              <li class="d-flex justify-content-between font-weight-bold text-uppercase text-dark mt-3 pt-3 border-top">
+                Total to pay <span>{{ order.totalAmount | currency }}</span>
+              </li>
+            </ul>
+            
+            <button (click)="placeOrder()" class="btn btn-primary mt-2 w-100 text-center font-weight-bold custom-btn-p">
+              Place Order
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ng-template #emptyCart>
+  <div class="empty-cart text-center mt-5">
+    <mat-icon class="icon" style="font-size: 64px; height: 64px; width: 64px;">remove_shopping_cart</mat-icon>
+    <h2 class="mt-3">Your cart is empty</h2>
+    <button class="btn btn-primary cart-btn" [routerLink]="['/customer/shop']">Start Shopping</button>
+  </div>
+</ng-template>

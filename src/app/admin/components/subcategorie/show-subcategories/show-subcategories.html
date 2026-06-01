@@ -1,0 +1,75 @@
+<div class="card">
+  <div class="card-header d-flex justify-content-between align-items-center">
+
+    <h3 class="card-title">SubCategories List</h3>
+    &nbsp;
+<div class="actions mb-3">
+  <button  class="btn btn-sm btn-primary" routerLink="/admin/add-subcategory">
+     <i class="bi bi-plus-lg"></i>
+
+  </button>
+</div>
+    <div class="input-group w-25" style="margin-left: auto;">
+      <input type="text"
+             class="form-control"
+             placeholder="Search..."
+             [(ngModel)]="searchText">
+      <span class="input-group-text">
+        <i class="bi bi-search"></i>
+      </span>
+    </div>
+
+  </div>
+  <div class="card-body table-responsive p-0">
+    <table class="table table-hover text-nowrap">
+      <thead class="table-light">
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th>Products</th>
+          <th width="150">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let subcategory of filteredSubCategories">
+          <td>{{ subcategory.name_subcat }}</td>
+          <td>{{ subcategory.description_subcat }}</td>
+          <td>{{subcategory.categoryName}}</td>
+       <!-- CORRECTION: Afficher les produits de cette sous-catégorie -->
+          <td>
+ <ul class="list-unstyled mb-0">
+  <li *ngFor="let product of subcategory.products" 
+      class="mb-1"
+      title="{{ product.description_prod }}">
+    <i class="bi bi-dot me-1"></i>{{ product.name_prod }}
+  </li>
+  <li *ngIf="!subcategory.products || subcategory.products.length === 0" 
+      class="text-muted fst-italic">
+    No products
+  </li>
+</ul>
+          </td>
+          <td>
+            <a class="btn btn-sm btn-info me-1"
+               [routerLink]="['/admin/subcategory', subcategory.id, 'details']">
+              <i class="bi bi-eye"></i>
+            </a>
+
+            <a class="btn btn-sm btn-warning me-1"
+               [routerLink]="['/admin/subcategory', subcategory.id, 'edit']">
+              <i class="bi bi-pencil"></i>
+            </a>
+
+            <button class="btn btn-sm btn-danger"
+                    (click)="deleteSubCategory(subcategory.id)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

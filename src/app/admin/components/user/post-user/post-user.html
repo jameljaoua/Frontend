@@ -1,0 +1,27 @@
+<div class="container">
+    <h2>Add User</h2>
+    <form [formGroup]="userForm" (ngSubmit)="addUser()">
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Name</mat-label>
+            <input matInput type="text" placeholder="Name" formControlName="name" />
+            <mat-error *ngIf="userForm.get('name')?.hasError('required')">This input is required!</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" placeholder="Email" formControlName="email" />
+            <mat-error *ngIf="userForm.get('email')?.hasError('required')">This input is required!</mat-error>
+            <mat-error *ngIf="userForm.get('email')?.hasError('email')">Please enter a valid email!</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Password</mat-label>
+            <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Password" formControlName="password" />
+            <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
+            </button>
+            <mat-error *ngIf="userForm.get('password')?.hasError('required')">This input is required!</mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit">Add User</button>
+    </form>
+</div>

@@ -1,0 +1,157 @@
+<!-- Loading State -->
+<div class="container mt-4" *ngIf="isLoading">
+  <div class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="mt-3 text-muted">Loading category details...</p>
+  </div>
+</div>
+
+<!-- Category Details -->
+<div class="container mt-4" *ngIf="!isLoading && category">
+  <!-- En-tête de la catégorie -->
+  <div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+      <h4 class="mb-0">Category Details</h4>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-12">
+          <h2 class="mb-3">Name : {{ category.name_cat }}</h2>
+          <p class="lead">Description : {{ category.description_cat }}</p>
+          
+          <div class="mt-3">
+            <span class="badge bg-info fs-6">
+              Total Products: {{ products.length }}
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-4">
+        <button class="btn btn-secondary" [routerLink]="'/admin/categories'">
+          <i class="bi bi-arrow-left me-2"></i>Back to Categories
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Liste des sous-catégories -->
+  <div class="card">
+    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Subcategories in this Category</h5>
+    </div>
+    
+    <div class="card-body">
+      <!-- Message si aucun sous-catégorie -->
+      <div *ngIf="subcategories.length === 0" class="text-center py-4">
+        <i class="bi bi-box-seam text-muted" style="font-size: 3rem;"></i>
+        <p class="text-muted mt-3">No subcategories found in this category</p>
+        <a class="btn btn-outline-primary btn-sm" [routerLink]="'/admin/add-subcategory'">
+          Add your first subcategory
+        </a>
+      </div>
+
+      <!-- Grille des sous-catégories -->
+      <div *ngIf="subcategories.length > 0" class="row g-3">
+        <div *ngFor="let subcategory of subcategories" class="col-md-4 col-lg-3">
+          <div class="card h-100 subcategory-card">
+
+            
+            <!-- Détails du produit -->
+            <div class="card-body">
+              <h6 class="card-title text-truncate" title="{{ subcategory.name_subcat }}">
+                {{ subcategory.name_subcat }}
+              </h6>
+              <p class="card-text small text-muted text-truncate" 
+                 title="{{ subcategory.description_subcat }}">
+                {{ subcategory.description_subcat || 'No description' }}
+              </p>
+
+            </div>
+            
+            <!-- Actions -->
+            <div class="card-footer bg-transparent d-flex justify-content-between">
+              <a class="btn btn-sm btn-outline-info" 
+                 [routerLink]="['/admin/subcategory', subcategory.id, 'details']">
+                <i class="bi bi-eye"></i>
+              </a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Liste des produits -->
+  <div class="card">
+    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Products in this Category</h5>
+
+    </div>
+    
+    <div class="card-body">
+      <!-- Message si aucun produit -->
+      <div *ngIf="products.length === 0" class="text-center py-4">
+        <i class="bi bi-box-seam text-muted" style="font-size: 3rem;"></i>
+        <p class="text-muted mt-3">No products found in this category</p>
+        <a class="btn btn-outline-primary btn-sm" [routerLink]="'/admin/add-product'">
+          Add your first product
+        </a>
+      </div>
+
+      <!-- Grille des produits -->
+      <div *ngIf="products.length > 0" class="row g-3">
+        <div *ngFor="let product of products" class="col-md-4 col-lg-3">
+          <div class="card h-100 product-card">
+            <!-- Image du produit -->
+            <div class="product-image-wrapper">
+              <img [src]="product.processedImg || 'assets/images/placeholder.jpg'" 
+                   class="card-img-top product-img" 
+                   [alt]="product.name_prod"
+                   onerror="this.src='assets/images/placeholder.jpg'">
+            </div>
+            
+            <!-- Détails du produit -->
+            <div class="card-body">
+              <h6 class="card-title text-truncate" title="{{ product.name_prod }}">
+                {{ product.name_prod }}
+              </h6><br>
+              <p class="card-text small text-muted text-truncate" 
+                 title="{{ product.description_prod }}">
+                {{ product.description_prod || 'No description' }}
+              </p>
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold text-primary">
+                  {{ product.price | currency }}
+                </span>
+                <span class="badge bg-secondary">{{ product.categoryName }}</span>
+              </div>
+            </div>
+            
+            <!-- Actions -->
+            <div class="card-footer bg-transparent d-flex justify-content-between">
+              <a class="btn btn-sm btn-outline-info" 
+                 [routerLink]="['/admin/product', product.id, 'details']">
+                <i class="bi bi-eye"></i>
+              </a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Error State -->
+<div class="container mt-4" *ngIf="!isLoading && !category">
+  <div class="text-center py-5">
+    <i class="bi bi-exclamation-triangle text-warning" style="font-size: 3rem;"></i>
+    <h4 class="mt-3">Category not found</h4>
+    <p class="text-muted">The category you're looking for doesn't exist.</p>
+    <button class="btn btn-primary mt-3" [routerLink]="'/admin/categories'">
+      <i class="bi bi-arrow-left me-2"></i>Back to Categories
+    </button>
+  </div>
+</div>

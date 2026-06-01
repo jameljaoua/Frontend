@@ -1,0 +1,5 @@
+.sidebar .nav-link:hover, .sidebar .nav-link.active {
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+    border-left: 4px solid white;
+}

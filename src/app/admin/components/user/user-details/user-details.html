@@ -1,0 +1,25 @@
+
+<div class="details-container" *ngIf="user">
+  <div class="product-card">
+    <div class="image-section">
+      <img [src]="user.processedImg" alt="{{user.name}}">
+    </div>
+
+    <div class="info-section">
+      <h1>User Details</h1>
+      <p>Name : {{user.name}}</p>
+      <p class="Email">Email : {{user.email}}</p>
+      
+      <div class="price-row">
+        <span class="price-label">Role:</span>
+        <span class="price-value">{{user.userrole}}</span>
+      </div>
+      
+      <!-- Ajoutez un bouton de retour -->
+      <button mat-raised-button color="primary" [routerLink]="'/admin/users'">
+        <mat-icon>arrow_back</mat-icon>
+        Back to Users
+      </button>
+    </div>
+  </div>
+</div>

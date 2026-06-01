@@ -1,0 +1,29 @@
+<div class="container">
+    <h2>Add Subcategory</h2>
+    <form [formGroup]="subcategoryForm" (ngSubmit)="addSubcategory()">
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Name</mat-label>
+            <input matInput type="text" placeholder="Name" formControlName="name_subcat" />
+            <mat-error *ngIf="subcategoryForm.get('name_subcat')?.hasError('required')">This input is required!</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Description</mat-label>
+            <input matInput type="text" placeholder="Description" formControlName="description_subcat" />
+            <mat-error *ngIf="subcategoryForm.get('description_subcat')?.hasError('required')">This input is required!</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Select a category</mat-label>
+            <mat-select formControlName="categoryId" name="categoryId">
+                <mat-option *ngFor="let category of listOfCategories" [value]="category.id">
+                    {{category.name_cat}}
+                </mat-option>
+
+            </mat-select>
+            <mat-error *ngIf="subcategoryForm.get('categoryId')?.hasError('required')">
+                This Input is required!
+            </mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Add Subcategory</button>
+    </form>
+</div>

@@ -1,0 +1,46 @@
+ <div class="container my-5">
+ <div class="row account-container">
+    <div class="col-lg-3 sidebar p-0">
+        <app-customer-sidebar></app-customer-sidebar>
+    </div>
+    <div class="col-lg-9 main-content">
+                     <div class="card mb-4">
+                        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Billing Items</h5>
+                            <a href="/customer/billing" class="btn btn-sm btn-outline-primary">View All</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Amount</th>
+                                            <th>Description</th>
+                                            <th>Phone</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let order of myPurchasedOrder">
+                                            <td>{{ order.id }}</td>
+                                            <td>{{ order.amount }}</td>
+                                            <td>{{ order.orderDescription }}</td>
+                                            <td>{{ order.phone }}</td>
+                                            <td>{{ order.date | date:'dd/MM/yyyy' }}</td>
+                                            <td>
+                                          <span *ngIf="order.orderStatus === 'Purchased'" class="badge bg-success">Purchased</span>
+                                             </td>
+                                            <td><a routerLink="/customer/purchased-orders/{{ order.id }}" class="btn btn-sm btn-outline-primary">View</a></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+    </div>
+</div>
+</div>

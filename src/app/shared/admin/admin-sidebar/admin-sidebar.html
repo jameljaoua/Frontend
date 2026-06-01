@@ -1,0 +1,106 @@
+      <!--begin::Sidebar-->
+      <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+        <!--begin::Sidebar Brand-->
+        <div class="sidebar-brand">
+          <!--begin::Brand Link-->
+          <a href="/admin/dashboard" class="brand-link">
+            <!--begin::Brand Image-->
+            <img
+              src="admin/assets/img/ds.png"
+              alt="DigiStore Logo"
+              class="brand-image opacity-75 shadow"
+            />
+            <!--end::Brand Image-->
+            <!--begin::Brand Text-->
+            <span class="brand-text fw-light">DigiStore</span>
+            <!--end::Brand Text-->
+          </a>
+          <!--end::Brand Link-->
+        </div>
+        <!--end::Sidebar Brand-->
+        <!--begin::Sidebar Wrapper-->
+        <div class="sidebar-wrapper">
+          <nav class="mt-2">
+            <!--begin::Sidebar Menu-->
+            <ul
+              class="nav sidebar-menu flex-column"
+              data-lte-toggle="treeview"
+              role="navigation"
+              aria-label="Main navigation"
+              data-accordion="false"
+              id="navigation"
+            >
+                <li class="nav-item">
+                    <a routerLink="/admin/dashboard" routerLinkActive="active" class="nav-link">
+                        <i class="fas fa-tachometer-alt-fast"></i>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/admin/categories" routerLinkActive="active" class="nav-link">
+                        <i class="fa-jelly fa-regular fa-folder"></i>
+                        <p>Categories</p>
+                    </a>
+                </li>
+                 <li class="nav-item">
+                    <a routerLink="/admin/subcategories" routerLinkActive="active" class="nav-link">
+                        <i class="fa-jelly fa-regular fa-folder"></i>
+                        <p>Subcategories</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/admin/products" routerLinkActive="active" class="nav-link">
+                        <i class="fas fa-shopping-basket"></i>
+                        <p>Products</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/admin/coupons" routerLinkActive="active" class="nav-link">
+                        <i class="fas fa-tags"></i>
+                        <p>Coupons</p>
+                    </a>
+                </li>
+               <li class="nav-item">
+                    <a routerLink="/admin/orders" routerLinkActive="active" class="nav-link">
+                        <i class="fas fa-shopping-cart"></i>
+                        <p>Orders</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/admin/users" routerLinkActive="active" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <p>Users</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/admin/downloads" routerLinkActive="active" class="nav-link">
+                        <i class="fas fa-download"></i>
+                        <p>Downloads</p>
+                    </a>
+                </li>
+                 <li class="nav-item">
+                    <a routerLink="/admin/transactions" routerLinkActive="active" class="nav-link">
+                        <i class="fas fa-exchange-alt"></i>
+                        <p>Transactions</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/admin/analytics" routerLinkActive="active" class="nav-link">
+                        <i class="fas fa-chart-line"></i>
+                        <p>Analytics</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a routerLink="/admin/notifications" routerLinkActive="active" class="nav-link">
+                        <i class="fas fa-bell"></i>
+                        <p>Notifications</p>
+                    </a>
+                </li>
+            </ul>
+            <!--end::Sidebar Menu-->
+          </nav>
+        </div>
+        <!--end::Sidebar Wrapper-->
+      </aside>
+      <!--end::Sidebar-->

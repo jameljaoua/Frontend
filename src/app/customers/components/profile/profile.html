@@ -1,0 +1,82 @@
+ <div class="container my-5">
+     <div class="row account-container">
+        <div class="col-lg-3 sidebar p-0">
+            <app-customer-sidebar></app-customer-sidebar>
+        </div>
+        <div class="col-lg-9 main-content">
+            <div class="card mb-4">
+                        <h2 class="mb-4">Profile Details</h2>
+                        
+                        <div class="row">
+                            <div class="col-md-6 col-lg-8 mb-4">
+                                <div class="card mb-4">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Personal Information</h5>
+                                    </div>
+                                    <div class="card-body" *ngIf="profileForm">
+                                        <form #f="ngForm" (ngSubmit)="updateProfile()">
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label for="name" class="form-label"> Name</label>
+                                                    <input type="text" class="form-control" id="name"              
+                                                    name="name" 
+                                                    [(ngModel)]="profileForm.name" 
+                                                    required >
+                                                </div>
+
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label">Email Address</label>
+                                                <input type="email" class="form-control" id="email"
+                                                name="email" 
+                                                [(ngModel)]="profileForm.email" 
+                                                required >
+                                            </div>
+    
+                                            <button type="submit" class="btn btn-primary" >Save Changes</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                
+
+                            </div>
+                            
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Profile Photo</h5>
+                                    </div>
+<div class="card-body text-center">
+    <div *ngIf="imagePreview">
+        <img [src]="imagePreview" alt="Profile" class="profile-img mb-3" style="width: 200px; height: 200px; object-fit: cover;">
+    </div>
+    <div *ngIf="!imagePreview && existingImage">
+        <img [src]="existingImage" alt="Profile" class="profile-img mb-3" style="width: 200px; height: 200px; object-fit: cover;">
+    </div>
+    <div *ngIf="!imagePreview && !existingImage">
+        <img src="assets/img/default-avatar.png" alt="Default Profile" class="profile-img mb-3">
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <input type="file" #fileInput (change)="onImageSelected($event)" hidden accept="image/*">
+        
+        <button type="button" class="btn btn-primary btn-sm me-2" (click)="fileInput.click()">
+            Upload New
+        </button>
+        
+        <button type="button" class="btn btn-outline-danger btn-sm" (click)="removeExistingFile()">
+            Remove
+        </button>
+    </div>
+    <p class="text-muted mt-3"><small>Recommended: Square JPG, PNG, at least 200x200 pixels</small></p>
+</div>
+                                </div>
+                                
+    
+                            </div>
+                        </div>
+            </div>
+        </div>
+    </div>
+
+ </div>
