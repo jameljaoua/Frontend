@@ -7,6 +7,7 @@
       <h1>Transaction Details</h1>
      <div> User : <span class="category-badge">{{transaction.userName}}</span></div>
      <div> Order : <span class="category-badge">{{transaction.orderId}}</span></div>
+    <!--- <div> Stripe Token : <span class="category-badge">{{transaction.stripeToken}}</span></div> --->
         <p> Amount : {{transaction.amount | currency:'USD'}}</p>
         <p>Date: {{transaction.datePayment | date:'dd/MM/yyyy'}}</p>
       <!-- Ajoutez un bouton de retour -->

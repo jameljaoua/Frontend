@@ -28,7 +28,7 @@ export class PublicService {
         return this.http.get(BASIC_URL + `category/${categoryId}`);
       }
       getProductsByCategory(categoryId: number): Observable<any[]> {
-        return this.http.get<any[]>(`${BASIC_URL}product/${categoryId}/products`);
+        return this.http.get<any[]>(`${BASIC_URL}product/categories/${categoryId}/products`);
       
       }
       // Pour récupérer catégorie + produits en une seule requête

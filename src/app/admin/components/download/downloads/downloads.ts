@@ -27,7 +27,10 @@ import { AdminService } from '../../../service/admin.service';
   styleUrl: './downloads.css',
 })
 export class Downloads {
-downloads : any;
+downloads : any[] = [];
+  searchQuery: string = '';
+  currentPage: number = 1;
+itemsPerPage: number = 6;
 constructor(private adminService :AdminService,private snackBar :MatSnackBar,private cdr: ChangeDetectorRef
 ){
 
@@ -41,5 +44,38 @@ getDownloads(){
    this.cdr.detectChanges(); 
 
   })
+}
+ searchDownloads() {
+    if (this.searchQuery.trim() !== '') {
+      this.adminService.getDownloadsByUserName(this.searchQuery).subscribe({
+        next: (res) => {
+          this.downloads = res;
+          console.log("Téléchargemenets trouvées :", this.downloads);
+        },
+        error: (err) => {
+          console.error("Erreur lors de la recherche", err);
+        }
+      });
+    } else {
+      // Optionnel : recharger toutes les téléchargements si le champ est vide
+      this.downloads = [];
+    }
+  }
+  // Méthode pour obtenir la liste filtrée selon la page active
+get paginatedDownloads() {
+  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+  return this.downloads.slice(startIndex, startIndex + this.itemsPerPage);
+}
+
+// Méthode pour obtenir le nombre total de pages
+get totalPages(): number {
+  return Math.ceil(this.downloads.length / this.itemsPerPage);
+}
+
+// Méthode pour changer de page
+changePage(page: number) {
+  if (page >= 1 && page <= this.totalPages) {
+    this.currentPage = page;
+  }
 }
 }

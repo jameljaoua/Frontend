@@ -36,7 +36,8 @@ export class ShowCategories implements OnInit{
   allProducts: any[] = [];
   allSubCategories: any[] = [];
   searchCategoryForm!: FormGroup;
-
+   currentPage: number = 1;
+itemsPerPage: number = 6;
   displayedColumns: string[] = [
     'name',
     'description',
@@ -88,15 +89,21 @@ export class ShowCategories implements OnInit{
   });
 }
   get filteredCategories() {
-  if (!this.searchText) {
-    return this.categories;
+      let result = this.categories;
+
+  // Correction de la condition : on filtre si searchText contient du texte
+  if (this.searchText && this.searchText.trim() !== '') {
+    result = this.categories.filter(category =>
+      category.name_cat && category.name_cat
+        .toLowerCase()
+        .includes(this.searchText.toLowerCase())
+    );
   }
 
-  return this.categories.filter(category =>
-    category.name_cat
-      .toLowerCase()
-      .includes(this.searchText.toLowerCase())
-  );
+  // Application de la pagination directement sur la liste résultante
+  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+  return result.slice(startIndex, startIndex + this.itemsPerPage);
+  
 }
     submitForm() {
     const title = this.searchCategoryForm.value.title;
@@ -114,4 +121,25 @@ export class ShowCategories implements OnInit{
       }
     });
   }
+      // Méthode pour obtenir la liste filtrée selon la page active
+get paginatedCategories() {
+  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+  return this.categories.slice(startIndex, startIndex + this.itemsPerPage);
+}
+
+// Méthode pour obtenir le nombre total de pages
+get totalPages(): number {
+  const count = this.searchText && this.searchText.trim() !== ''
+    ? this.categories.filter(category => category.name_cat && category.name_cat.toLowerCase().includes(this.searchText.toLowerCase())).length 
+    : this.categories.length;
+    
+  return Math.ceil(count / this.itemsPerPage) || 1;
+}
+
+// 3. Changement de page
+changePage(page: number) {
+  if (page >= 1 && page <= this.totalPages) {
+    this.currentPage = page;
+  }
+}
 }

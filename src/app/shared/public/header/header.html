@@ -1,108 +1,137 @@
-<!-- Version pour utilisateur non connecté -->
-<div *ngIf="!isCustomerLoggedIn && !isAdminLoggedIn">
-    <!-- Header Section Start -->
-    <header>
-        <div class="top-header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-6 d-none d-sm-none p-0 d-md-none d-lg-block">
-                        <ul class="list-unstyled m-0 d-flex p-0 top-header-menu">
-                            <li><a routerLink="/">Home</a></li>
-                            <li><a routerLink="/about">About Us</a></li>
-                            <li><a routerLink="/contact">Contact Us</a></li>
-                        </ul>
-                    </div>
-                </div>
+<!-- ==================== Mobile Menu Start Here ==================== -->
+<div class="mobile-menu d-lg-none d-block" [class.active]="isMobileMenuOpen">
+    <button type="button" class="close-button" (click)="closeMobileMenu()"> <i class="las la-times"></i> </button>
+    <div class="mobile-menu__inner">
+        <a routerLink="/" class="mobile-menu__logo">
+            <img src="pubcl/images/logo/logo.png" alt="Logo" class="white-version">
+            <img src="pubcl/images/logo/white-logo-two.png" alt="Logo" class="dark-version">
+        </a>
+        <div class="mobile-menu__menu">
+            <ul class="nav-menu flx-align nav-menu--mobile">
+                <li class="nav-menu__item has-submenu">
+                    <a href="javascript:void(0)" class="nav-menu__link">Home</a>
+                    <ul class="nav-submenu">
+                        <li class="nav-submenu__item"><a routerLink="/" class="nav-submenu__link">Home</a></li>
+                    </ul>
+                </li>
+                <li class="nav-menu__item has-submenu">
+                    <a href="javascript:void(0)" class="nav-menu__link">Products</a>
+                    <ul class="nav-submenu">
+                        <li class="nav-submenu__item"><a routerLink="/shop" class="nav-submenu__link">All Products</a></li>
+                    </ul>
+                </li>
+                <li class="nav-menu__item">
+                    <a routerLink="/about" class="nav-menu__link">About us</a>
+                </li>
+                <li class="nav-menu__item">
+                    <a routerLink="/contact" class="nav-menu__link">Contact</a>
+                </li>
+            </ul>
+
+            <div class="header-right__inner d-lg-none my-3 gap-1 d-flex flx-align" *ngIf="!isCustomerLoggedIn && !isAdminLoggedIn">
+                <a routerLink="/register" class="btn btn-main pill">
+                    <span class="icon-left icon">
+                        <img src="pubcl/images/icons/user.svg" alt="">
+                    </span>Create Account
+                </a>
             </div>
-        </div>
-        
-     <div class="middle-header">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-1 col-sm-1 col-md-1 col-lg-1 d-block d-sm-block d-md-block d-lg-none">
-                    <button class="navbar-toggler border-0 collapsed" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#navbar-default" aria-controls="navbar-default" aria-label="Toggle navigation">
-                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"
-                            class="icon-hamburger" fill="none" viewBox="0 0 18 16" width="20px" height="20px">
-                            <path
-                                d="M1 .5a.5.5 0 100 1h15.71a.5.5 0 000-1H1zM.5 8a.5.5 0 01.5-.5h15.71a.5.5 0 010 1H1A.5.5 0 01.5 8zm0 7a.5.5 0 01.5-.5h15.71a.5.5 0 010 1H1a.5.5 0 01-.5-.5z"
-                                fill="currentColor">
-                            </path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="col-8 col-sm-8 col-md-8 col-lg-3 order-1 order-lg-1 d-flex justify-content-start">
-                    <a href="index.html">
-                        <img src="pubcl/images/ds.png" alt="logo" width="180" height="auto" sizes="(max-width: 360px) 50vw, 180px">
-                    </a>
-                </div>
-                <div class="col-12 col-sm-12 col-md-12 col-lg-6 order-3 order-lg-2 mt-3 mt-lg-0 d-none d-lg-block">
-                    <div class="input-group search-container">
-                        <input type="text" class="form-control header-search" placeholder="Search" [(ngModel)]="searchQuery" (keyup.enter)="onSearch()">
-                      <select id="searchSelect" class="form-select flex-shrink-0" [(ngModel)]="selectedCategory">
-                             <option value="All categories">All categories</option>
-                            <option *ngFor="let category of categories" [value]="category.name_cat">
-                                {{ category.name_cat }}
-                            </option>
-                       </select>
-                        <span class="input-group-text text-black bg-primary">
-                            <svg aria-hidden="true" fill="none" focusable="false" width="24" height="24"
-                                class="icon-search" viewBox="0 0 24 24">
-                                <path d="M10.364 3a7.364 7.364 0 1 0 0 14.727 7.364 7.364 0 0 0 0-14.727Z" stroke="#fff"
-                                    stroke-width="1.5" stroke-miterlimit="10"></path>
-                                <path d="M15.857 15.858 21 21.001" stroke="#fff" stroke-width="1.5"
-                                    stroke-miterlimit="10" stroke-linecap="round"></path>
-                            </svg>
-                        </span>
-                    </div>
-                </div>
-  
+            <div class="header-right__inner d-lg-none my-3 gap-1 d-flex flx-align" *ngIf="isCustomerLoggedIn || isAdminLoggedIn">
+                <a [routerLink]="isAdminLoggedIn ? '/admin/dashboard' : '/customer/dashboard'" class="btn btn-main pill">
+                    Mon compte
+                </a>
+                <a (click)="logout()" class="btn btn-outline-main pill">Déconnexion</a>
             </div>
         </div>
     </div>
-
-        <!-- Navs -->
-        <div class="header-bottom">
-            <nav class="navbar navbar-expand-lg navbar-light navbar-default py-0 px-0">
-                <div class="container">
-                    <div class="offcanvas offcanvas-start" tabindex="-1" id="navbar-default">
-                        <div class="offcanvas-header">
-                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                        </div>
-                        <div class="offcanvas-body">
-                            <div class="row w-100 mx-0 py-0 p-0">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-9 overflow-x-auto px-0">
-                                    <div class="menu-item-list">
-                                        <ul class="navbar-nav align-items-start align-items-lg-center py-0">
-                                            <li class="nav-item me-0 me-lg-2">
-                                                <a class="nav-link" routerLink="/">Home</a>
-                                            </li>
-                                            <li class="nav-item me-0 me-lg-2">
-                                                <a class="nav-link" routerLink="/shop">Shop</a>
-                                            </li>
-                                            <li class="nav-item me-0 me-lg-2">
-                                                <a class="nav-link" routerLink="/login">Sign in</a>
-                                            </li>
-                                            <li class="nav-item me-0 me-lg-2">
-                                                <a class="nav-link" routerLink="/register">Signup</a>
-                                            </li>
-                                            <li class="nav-item me-0 me-lg-2">
-                                                <a class="nav-link" routerLink="/about">About us</a>
-                                            </li>
-                                            <li class="nav-item me-0 me-lg-2">
-                                                <a class="nav-link" routerLink="/contact">Contact</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </div>
-        <!-- Navs -->
-    </header>
-    <!-- Header Section End -->
 </div>
+<!-- ==================== Mobile Menu End Here ==================== -->
 
+<!-- ==================== Header Start Here ==================== -->
+<header class="header">
+    <div class="container container-full">
+        <nav class="header-inner flx-between">
+            <!-- Logo Start -->
+            <div class="logo">
+                <a routerLink="/" class="link white-version">
+                    <img src="pubcl/images/logo/logo.png" alt="Logo">
+                </a>
+                <a routerLink="/" class="link dark-version">
+                    <img src="pubcl/images/logo/white-logo.png" alt="Logo">
+                </a>
+            </div>
+            <!-- Logo End  -->
+
+            <!-- Menu Start  -->
+            <div class="header-menu d-lg-block d-none">
+                <ul class="nav-menu flx-align">
+                    <li class="nav-menu__item">
+                        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-menu__link">Home</a>
+                    </li>
+                    <li class="nav-menu__item has-submenu">
+                        <a href="javascript:void(0)" class="nav-menu__link">Products</a>
+                        <ul class="nav-submenu">
+                            <li class="nav-submenu__item">
+                                <a routerLink="/shop" class="nav-submenu__link"> All Products</a>
+                            </li>
+                            <li class="nav-submenu__item" *ngFor="let category of categories">
+                                <a (click)="onCategoryClick(category)" class="nav-submenu__link"> {{ category.name_cat }}</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-menu__item">
+                        <a routerLink="/about" routerLinkActive="active" class="nav-menu__link">About us</a>
+                    </li>
+                    <li class="nav-menu__item">
+                        <a routerLink="/contact" routerLinkActive="active" class="nav-menu__link">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- Menu End  -->
+
+            <!-- Header Right start -->
+            <div class="header-right flx-align">
+                <a routerLink="/login" class="header-right__button cart-btn position-relative">
+                    <img src="pubcl/images/icons/cart.svg" alt="" class="white-version">
+                    <img src="pubcl/images/icons/cart-white.svg" alt="" class="dark-version">
+                    <span class="qty-badge font-12">{{ cartCount }}</span>
+                </a>
+
+                <!-- Light Dark Mode -->
+                <div class="theme-switch-wrapper position-relative">
+                    <label class="theme-switch" for="checkbox">
+                        <input type="checkbox" class="d-none" id="checkbox" (change)="toggleDarkMode()">
+                        <span class="slider text-black header-right__button white-version">
+                            <img src="pubcl/images/icons/sun.svg" alt="">
+                        </span>
+                        <span class="slider text-black header-right__button dark-version">
+                            <img src="pubcl/images/icons/moon.svg" alt="">
+                        </span>
+                    </label>
+                </div>
+
+                <div class="header-right__inner gap-3 flx-align d-lg-flex d-none">
+                    <!-- Utilisateur non connecté -->
+                    <ng-container *ngIf="!isCustomerLoggedIn && !isAdminLoggedIn">
+                        <a routerLink="/login" class="btn btn-outline-main pill">Sign in</a>
+                        <a routerLink="/register" class="btn btn-main pill">
+                            <span class="icon-left icon">
+                                <img src="pubcl/images/icons/user.svg" alt="">
+                            </span>Create Account
+                        </a>
+                    </ng-container>
+
+                    <!-- Utilisateur connecté -->
+                    <ng-container *ngIf="isCustomerLoggedIn || isAdminLoggedIn">
+                        <a [routerLink]="isAdminLoggedIn ? '/admin/dashboard' : '/customer/dashboard'" class="btn btn-outline-main pill">
+                            Mon compte
+                        </a>
+                        <a (click)="logout()" class="btn btn-main pill">Déconnexion</a>
+                    </ng-container>
+                </div>
+                <button type="button" class="toggle-mobileMenu d-lg-none" (click)="openMobileMenu()"> <i class="las la-bars"></i> </button>
+            </div>
+            <!-- Header Right End  -->
+        </nav>
+    </div>
+</header>
+<!-- ==================== Header End Here ==================== -->

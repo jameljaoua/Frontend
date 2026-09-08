@@ -291,6 +291,27 @@ getOrderById(orderId:number): Observable<any> {
           headers: this.createAuthorizationHeader()
         });
   }
+  getOrdersByUserName(userName: string): Observable<any> {
+    return this.http.get(BASIC_URL + `api/admin/orders/search/${userName}`, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+    getDownloadsByUserName(userName: string): Observable<any> {
+    return this.http.get(BASIC_URL + `api/admin/downloads/search/${userName}`, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+    getPaymentsByUserName(userName: string): Observable<any> {
+    return this.http.get(BASIC_URL + `api/admin/transactions/search/${userName}`, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+     getNotificationsByUserName(userName: string): Observable<any> {
+    return this.http.get(BASIC_URL + `api/admin/notifications/search/${userName}`, {
+      headers: this.createAuthorizationHeader()
+    });
+  }
+  
     private createAuthorizationHeader():HttpHeaders{
       return new HttpHeaders().set(
         'Authorization','Bearer '+UserStorageService.getToken()

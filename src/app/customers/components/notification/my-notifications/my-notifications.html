@@ -1,38 +1,48 @@
- <div class="container my-5">
- <div class="row account-container">
-    <div class="col-lg-3 sidebar p-0">
+<section class="dashboard">
+    <div class="dashboard__inner d-flex">
         <app-customer-sidebar></app-customer-sidebar>
-    </div>
-    <div class="col-lg-9 main-content">
-                     <div class="card mb-4">
-                        <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">Billing Items</h5>
-                            <a href="/customer/my-notifications" class="btn btn-sm btn-outline-primary">View All</a>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Title</th>
-                                            <th>Message</th>
-                                            <th>Read Status</th>
-                                            <th>created At</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let notification of myNotifications">
-                                            <td>{{ notification.title }}</td>
-                                            <td>{{ notification.message }}</td>
-                                            <td>{{ notification.isRead ? 'Read' : 'Unread' }}</td>
-                                            <td>{{ notification.createdAt | date:'dd/MM/yyyy' }}</td>
-                                        </tr>
 
-                                    </tbody>
-                                </table>
-                            </div>
+        <div class="dashboard-body">
+            <div class="dashboard-body__content padding-y-60">
+                <div class="container container-two">
+                    <h4 class="mb-32">My Notifications</h4>
+
+                    <div class="dashboard-card">
+                        <div class="dashboard-card__header flx-between gap-2 mb-24">
+                            <h6 class="dashboard-card__title mb-0">All Notifications</h6>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table style-two">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Message</th>
+                                        <th>Status</th>
+                                        <th>Created At</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let notification of myNotifications">
+                                        <td class="fw-600 text-heading">{{ notification.title }}</td>
+                                        <td class="text-body">{{ notification.message }}</td>
+                                        <td>
+                                            <span class="badge" [ngClass]="notification.isRead ? 'bg-secondary' : 'bg-main'">
+                                                {{ notification.isRead ? 'Read' : 'Unread' }}
+                                            </span>
+                                        </td>
+                                        <td>{{ notification.createdAt | date:'dd/MM/yyyy' }}</td>
+                                    </tr>
+                                    <tr *ngIf="!myNotifications || myNotifications.length === 0">
+                                        <td colspan="4" class="text-center text-body py-4">Aucune notification pour le moment.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
+
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-</div>
+</section>

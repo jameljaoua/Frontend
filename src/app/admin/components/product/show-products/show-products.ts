@@ -33,7 +33,8 @@ searchText: string = '';
 
   products: any[] = [];
   searchProductForm!: FormGroup;
-
+    currentPage: number = 1;
+itemsPerPage: number = 6;
   displayedColumns: string[] = [
     'image',
     'name',
@@ -71,15 +72,20 @@ searchText: string = '';
     });
   }
 get filteredProducts() {
-  if (!this.searchText) {
-    return this.products;
+  let result = this.products;
+
+  // Correction de la condition : on filtre si searchText contient du texte
+  if (this.searchText && this.searchText.trim() !== '') {
+    result = this.products.filter(product =>
+      product.name_prod && product.name_prod
+        .toLowerCase()
+        .includes(this.searchText.toLowerCase())
+    );
   }
 
-  return this.products.filter(product =>
-    product.name_prod
-      .toLowerCase()
-      .includes(this.searchText.toLowerCase())
-  );
+  // Application de la pagination directement sur la liste résultante
+  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+  return result.slice(startIndex, startIndex + this.itemsPerPage);
 }
   submitForm() {
     const title = this.searchProductForm.value.title;
@@ -183,4 +189,25 @@ get filteredProducts() {
       }
     });
   }
+    // Méthode pour obtenir la liste filtrée selon la page active
+get paginatedProducts() {
+  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+  return this.products.slice(startIndex, startIndex + this.itemsPerPage);
+}
+
+// Méthode pour obtenir le nombre total de pages
+get totalPages(): number {
+  const count = this.searchText && this.searchText.trim() !== ''
+    ? this.products.filter(product => product.name_prod && product.name_prod.toLowerCase().includes(this.searchText.toLowerCase())).length 
+    : this.products.length;
+    
+  return Math.ceil(count / this.itemsPerPage) || 1;
+}
+
+// 3. Changement de page
+changePage(page: number) {
+  if (page >= 1 && page <= this.totalPages) {
+    this.currentPage = page;
+  }
+}
 }

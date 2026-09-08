@@ -27,7 +27,10 @@ import { AdminService } from '../../../service/admin.service';
   styleUrl: './notifications.css',
 })
 export class Notifications {
-notifications : any;
+notifications : any[] = [];
+  searchQuery: string = '';
+  currentPage: number = 1;
+itemsPerPage: number = 6;
 constructor(private adminService :AdminService,private snackBar :MatSnackBar,private cdr: ChangeDetectorRef
 ){
 
@@ -44,4 +47,37 @@ ngOnInit(){
       error: (err) => console.error("Erreur chargement notifications", err)
     });
   }
+  searchNotifications() {
+    if (this.searchQuery.trim() !== '') {
+      this.adminService.getPaymentsByUserName(this.searchQuery).subscribe({
+        next: (res) => {
+          this.notifications = res;
+          console.log("notifications trouvées :", this.notifications);
+        },
+        error: (err) => {
+          console.error("Erreur lors de la recherche", err);
+        }
+      });
+    } else {
+      // Optionnel : recharger toutes les téléchargements si le champ est vide
+      this.notifications = [];
+    }
+  }
+  // Méthode pour obtenir la liste filtrée selon la page active
+get paginatedNotifications() {
+  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+  return this.notifications.slice(startIndex, startIndex + this.itemsPerPage);
+}
+
+// Méthode pour obtenir le nombre total de pages
+get totalPages(): number {
+  return Math.ceil(this.notifications.length / this.itemsPerPage);
+}
+
+// Méthode pour changer de page
+changePage(page: number) {
+  if (page >= 1 && page <= this.totalPages) {
+    this.currentPage = page;
+  }
+}
 }

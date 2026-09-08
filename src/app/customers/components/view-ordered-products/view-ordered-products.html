@@ -1,36 +1,56 @@
-<div class="details-container">
-  <div class="product-card">
-    <div class="products-list-section">
-      <h2 class="section-title">Order Details</h2>
-      
-      <div *ngFor="let product of orderedProductsDetailsList" class="product-item">
-        <div class="image-wrapper">
-          <img [src]="product.processedImg" alt="{{product.name_prod}}">
-        </div>
+<section class="cart-personal padding-y-120">
+    <div class="container container-two">
+        <div class="row gy-5">
 
-        <div class="info-wrapper">
-          <h3 class="product-name">{{product.name_prod}}</h3>
-          <div class="item-details">
-            <span class="detail-badge">Prix: {{product.price | currency}}</span>
-            <span class="detail-badge">Quantité: {{product.quantity}}</span>
-          </div>
-        </div>
-      </div>
-    </div>
+            <!-- Liste des produits commandés -->
+            <div class="col-lg-8 pe-sm-5">
+                <h5 class="cart-personal__title mb-32">Order Details</h5>
 
-    <div class="summary-section">
-      <div class="total-box">
-        <span class="total-label">Total Amount</span>
-        <span class="total-value">{{totalAmount | currency}}</span>
-      </div>
-      
-      <button mat-flat-button color="primary" class="back-button" [routerLink]="'/customer/my-orders'">
-        <mat-icon>arrow_back</mat-icon>
-        Back to Orders
-      </button>
-      <button mat-flat-button color="warn" class="back-button" [routerLink]="['/customer/checkout', orderId]">
-        Checkout
-      </button>
+                <div class="d-flex flex-column gap-3">
+                    <div *ngFor="let product of orderedProductsDetailsList" class="cart-item flx-align gap-3 p-3 section-bg rounded-3">
+                        <div class="cart-item__thumb" style="width: 90px; height: 90px; flex-shrink: 0;">
+                            <img [src]="product.processedImg" [alt]="product.name_prod" class="cover-img w-100 h-100" style="object-fit: contain;">
+                        </div>
+                        <div class="cart-item__content flex-grow-1">
+                            <h6 class="cart-item__title font-heading fw-700 text-capitalize font-18 mb-2">{{ product.name_prod }}</h6>
+                            <div class="flx-align gap-3">
+                                <span class="badge bg-main">{{ product.price | currency }}</span>
+                                <span class="badge bg-secondary">Quantité: {{ product.quantity }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="text-body py-4 text-center" *ngIf="orderedProductsDetailsList.length === 0">
+                        Aucun produit trouvé pour cette commande.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Résumé + actions -->
+            <div class="col-lg-4">
+                <div class="order-summary">
+                    <h5 class="order-summary__title mb-32">Order Summary</h5>
+                    <ul class="billing-list">
+                        <li class="billing-list__item flx-between">
+                            <span class="text text-heading font-20 fw-500 font-heading">Total</span>
+                            <span class="amount text-heading font-20 fw-500 font-heading">{{ totalAmount | currency }}</span>
+                        </li>
+                    </ul>
+
+                    <button type="button" [routerLink]="['/customer/checkout', orderId]"
+                            class="btn btn-main d-flex w-100 justify-content-center align-items-center gap-2 pill px-sm-5 mt-32">
+                        <i class="fas fa-credit-card"></i>
+                        Proceed to Checkout
+                    </button>
+
+                    <a routerLink="/customer/my-orders"
+                       class="btn btn-outline-light d-flex w-100 justify-content-center align-items-center gap-2 pill px-sm-5 mt-3">
+                        <i class="las la-arrow-left"></i>
+                        Back to Orders
+                    </a>
+                </div>
+            </div>
+
+        </div>
     </div>
-  </div>
-</div>
+</section>

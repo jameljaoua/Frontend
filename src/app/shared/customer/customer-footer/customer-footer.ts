@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-customer-footer',
   imports: [
-        CommonModule,
+    CommonModule,
     RouterLink,
     RouterLinkActive,
   ],
@@ -14,13 +14,14 @@ import { CommonModule } from '@angular/common';
   styleUrl: './customer-footer.css',
 })
 export class CustomerFooter {
-    isCustomerLoggedIn : boolean = UserStorageService.isCustomerLoggedIn();
-    constructor(private router: Router
-) {}
-ngOnInit(): void {
-    this.router.events.subscribe(event => {
-      
-        this.isCustomerLoggedIn = UserStorageService.isCustomerLoggedIn();
+  isCustomerLoggedIn: boolean = UserStorageService.isCustomerLoggedIn();
+  currentYear: number = new Date().getFullYear();
 
-    })}
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    this.router.events.subscribe(() => {
+      this.isCustomerLoggedIn = UserStorageService.isCustomerLoggedIn();
+    });
+  }
 }

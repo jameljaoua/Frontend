@@ -26,7 +26,10 @@ imports: [
   styleUrl: './transactions.css',
 })
 export class Transactions {
-transactions : any;
+transactions :  any[] = [];
+  searchQuery: string = '';
+  currentPage: number = 1;
+itemsPerPage: number = 6;
 constructor(private adminService :AdminService,private snackBar :MatSnackBar,private cdr: ChangeDetectorRef
 ){
 
@@ -40,5 +43,38 @@ getTransactions(){
    this.cdr.detectChanges(); 
 
   })
+}
+ searchTransactions() {
+    if (this.searchQuery.trim() !== '') {
+      this.adminService.getPaymentsByUserName(this.searchQuery).subscribe({
+        next: (res) => {
+          this.transactions = res;
+          console.log("transactions trouvées :", this.transactions);
+        },
+        error: (err) => {
+          console.error("Erreur lors de la recherche", err);
+        }
+      });
+    } else {
+      // Optionnel : recharger toutes les téléchargements si le champ est vide
+      this.transactions = [];
+    }
+  }
+  // Méthode pour obtenir la liste filtrée selon la page active
+get paginatedTransactions() {
+  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+  return this.transactions.slice(startIndex, startIndex + this.itemsPerPage);
+}
+
+// Méthode pour obtenir le nombre total de pages
+get totalPages(): number {
+  return Math.ceil(this.transactions.length / this.itemsPerPage);
+}
+
+// Méthode pour changer de page
+changePage(page: number) {
+  if (page >= 1 && page <= this.totalPages) {
+    this.currentPage = page;
+  }
 }
 }

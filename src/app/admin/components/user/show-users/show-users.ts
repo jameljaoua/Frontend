@@ -32,6 +32,8 @@ searchText: string = '';
 
   users: any[] = [];
   searchUserForm!: FormGroup;
+    currentPage: number = 1;
+itemsPerPage: number = 6;
 
   displayedColumns: string[] = [
     'image',
@@ -67,15 +69,17 @@ searchText: string = '';
     });
   }
 get filteredUsers() {
-  if (!this.searchText) {
-    return this.users;
+  // 1. On filtre d'avance selon le texte recherché
+  let result = this.users;
+  if (this.searchText) {
+    result = this.users.filter(user =>
+      user.name.toLowerCase().includes(this.searchText.toLowerCase())
+    );
   }
 
-  return this.users.filter(user =>
-    user.name
-      .toLowerCase()
-      .includes(this.searchText.toLowerCase())
-  );
+  // 2. On applique la pagination directement sur le résultat filtré
+  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+  return result.slice(startIndex, startIndex + this.itemsPerPage);
 }
   submitForm() {
     const title = this.searchUserForm.value.title;
@@ -95,5 +99,26 @@ get filteredUsers() {
       }
     });
   }
+   // Méthode pour obtenir la liste filtrée selon la page active
+get paginatedUsers() {
+  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+  return this.users.slice(startIndex, startIndex + this.itemsPerPage);
+}
+
+// Méthode pour obtenir le nombre total de pages
+get totalPages(): number {
+  const count = this.searchText 
+    ? this.users.filter(user => user.name.toLowerCase().includes(this.searchText.toLowerCase())).length 
+    : this.users.length;
+    
+  return Math.ceil(count / this.itemsPerPage) || 1;
+}
+
+// Méthode pour changer de page
+changePage(page: number) {
+  if (page >= 1 && page <= this.totalPages) {
+    this.currentPage = page;
+  }
+}
 }
 

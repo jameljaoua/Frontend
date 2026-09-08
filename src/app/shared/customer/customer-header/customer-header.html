@@ -1,230 +1,145 @@
-<!-- Version pour client connecté -->
-<div *ngIf="isCustomerLoggedIn">
-    <!-- Header Section Start -->
-    <header>
-        <div class="top-header">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-6 d-none d-sm-none p-0 d-md-none d-lg-block">
-                        <ul class="list-unstyled m-0 d-flex p-0 top-header-menu">
-                            <li><a routerLink="/customer/">Home</a></li>
-                            <li><a routerLink="/about">About Us</a></li>
-                            <li><a routerLink="/contact">Contact Us</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- ==================== Mobile Menu Start Here ==================== -->
+<div class="mobile-menu d-lg-none d-block" [class.active]="isMobileMenuOpen">
+    <button type="button" class="close-button" (click)="closeMobileMenu()"> <i class="las la-times"></i> </button>
+    <div class="mobile-menu__inner">
+        <a routerLink="/customer/" class="mobile-menu__logo">
+            <img src="pubcl/images/logo/logo.png" alt="Logo" class="white-version">
+            <img src="pubcl/images/logo/white-logo-two.png" alt="Logo" class="dark-version">
+        </a>
+        <div class="mobile-menu__menu">
+            <ul class="nav-menu flx-align nav-menu--mobile">
+                <li class="nav-menu__item"><a routerLink="/customer/" class="nav-menu__link">Home</a></li>
+                <li class="nav-menu__item"><a routerLink="/customer/dashboard" routerLinkActive="active" class="nav-menu__link">Dashboard</a></li>
+                <li class="nav-menu__item"><a routerLink="/customer/shop" class="nav-menu__link">Shop</a></li>
+                <li class="nav-menu__item"><a routerLink="/customer/about" class="nav-menu__link">About us</a></li>
+                <li class="nav-menu__item"><a routerLink="/customer/contact" class="nav-menu__link">Contact</a></li>
+                <li class="nav-menu__item"><a routerLink="/customer/profile" class="nav-menu__link">My Account</a></li>
+                <li class="nav-menu__item"><a (click)="logout()" class="nav-menu__link" style="cursor:pointer;">Logout</a></li>
+            </ul>
 
-   <div class="middle-header">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-1 col-sm-1 col-md-1 col-lg-1 d-block d-sm-block d-md-block d-lg-none">
-                    <button class="navbar-toggler border-0 collapsed" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#navbar-default" aria-controls="navbar-default" aria-label="Toggle navigation">
-                        <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"
-                            class="icon-hamburger" fill="none" viewBox="0 0 18 16" width="20px" height="20px">
-                            <path
-                                d="M1 .5a.5.5 0 100 1h15.71a.5.5 0 000-1H1zM.5 8a.5.5 0 01.5-.5h15.71a.5.5 0 010 1H1A.5.5 0 01.5 8zm0 7a.5.5 0 01.5-.5h15.71a.5.5 0 010 1H1a.5.5 0 01-.5-.5z"
-                                fill="currentColor">
-                            </path>
-                        </svg>
-                    </button>
-                </div>
-                <div class="col-8 col-sm-8 col-md-8 col-lg-3 order-1 order-lg-1 d-flex justify-content-start">
-                    <a href="index.html">
-                        <img src="pubcl/images/ds.png" alt="logo" width="180" height="auto" sizes="(max-width: 360px) 50vw, 180px">
-                    </a>
-                </div>
-                <div class="col-12 col-sm-12 col-md-12 col-lg-6 order-3 order-lg-2 mt-3 mt-lg-0 d-none d-lg-block">
-                    <div class="input-group search-container">
-                        <input type="text" class="form-control header-search" placeholder="Search" [(ngModel)]="searchQuery" (keyup.enter)="onSearch()">
-                                                        <select id="searchSelect" class="form-select flex-shrink-0" [(ngModel)]="selectedCategory">
-                                                                <option value="All categories">All categories</option>
-                                                                <option *ngFor="let category of categories" [value]="category.name_cat">
-                                                                    {{ category.name_cat }}
-                                                                </option>
-                                                            </select>
-                        <span class="input-group-text text-black bg-primary">
-                            <svg aria-hidden="true" fill="none" focusable="false" width="24" height="24"
-                                class="icon-search" viewBox="0 0 24 24">
-                                <path d="M10.364 3a7.364 7.364 0 1 0 0 14.727 7.364 7.364 0 0 0 0-14.727Z" stroke="#fff"
-                                    stroke-width="1.5" stroke-miterlimit="10"></path>
-                                <path d="M15.857 15.858 21 21.001" stroke="#fff" stroke-width="1.5"
-                                    stroke-miterlimit="10" stroke-linecap="round"></path>
-                            </svg>
-                        </span>
-                    </div>
-                </div>
-                <div class="col-3 col-sm-3 col-md-3 col-lg-3 order-2 order-lg-3 d-flex justify-content-end">
-                    <div>
-                        <div class="list-inline  d-flex mt-2">
-                            <div class="list-inline-item d-none d-lg-block">
-                                <a routerLink="/customer/profile" class="text-muted">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-account" width="25" height="25"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="12" cy="7" r="4"></circle>
-                                    </svg>
-                                </a>
-                            </div>
-
-                            <div class="list-inline-item d-block d-lg-none">
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#searchModal">
-                                    <svg aria-hidden="true" fill="none" focusable="false" width="24" height="24"
-                                        class="icon-search" viewBox="0 0 24 24">
-                                        <path d="M10.364 3a7.364 7.364 0 1 0 0 14.727 7.364 7.364 0 0 0 0-14.727Z"
-                                            stroke="#000" stroke-width="1.5" stroke-miterlimit="10"></path>
-                                        <path d="M15.857 15.858 21 21.001" stroke="#000" stroke-width="1.5"
-                                            stroke-miterlimit="10" stroke-linecap="round"></path>
-                                    </svg>
-                                </a>
-                                <div class="search-container">
-                                    <!-- Mobile, table Search Modal -->
-                                    <div class="modal fade" id="searchModal" tabindex="-1" aria-hidden="true">
-                                        <div class="modal-dialog modal-xl">
-                                            <div class="modal-content rounded-0">
-                                                <div class="modal-body">
-                                                    <div class="row">
-                                                        <div class="input-group">
-                                                            <input type="text" class="form-control header-search"
-                                                                placeholder="Search" [(ngModel)]="searchQuery" (keyup.enter)="onSearch()">
-                                                                <select id="searchSelect" class="form-select flex-shrink-0" [(ngModel)]="selectedCategory">
-                                                                <option value="All categories">All categories</option>
-                                                                <option *ngFor="let category of categories" [value]="category.name_cat">
-                                                                    {{ category.name_cat }}
-                                                                </option>
-                                                            </select>
-                                                            <span class="input-group-text text-black bg-primary" (click)="onSearch()">
-                                                                <svg aria-hidden="true" fill="none" focusable="false"
-                                                                    width="24" height="24" class="icon-search"
-                                                                    viewBox="0 0 24 24">
-                                                                    <path
-                                                                        d="M10.364 3a7.364 7.364 0 1 0 0 14.727 7.364 7.364 0 0 0 0-14.727Z"
-                                                                        stroke="#fff" stroke-width="1.5"
-                                                                        stroke-miterlimit="10"></path>
-                                                                    <path d="M15.857 15.858 21 21.001" stroke="#fff"
-                                                                        stroke-width="1.5" stroke-miterlimit="10"
-                                                                        stroke-linecap="round"></path>
-                                                                </svg>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="list-inline-item dropdown dropdown-notif mx-2">
-                                    <a class="text-muted position-relative" data-bs-toggle="dropdown" style="cursor: pointer;">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
-                                            <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6"/>
-                                        </svg>
-                                        <span *ngIf="getUnreadCount() > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.65rem; padding: 0.25em 0.4em;">
-                                            {{ getUnreadCount() }}
-                                        </span>
-                                    </a>
-                                    
-                                    <div class="dropdown-menu dropdown-menu-end shadow p-0" style="max-height: 380px; overflow-y: auto; width: 310px; border-radius: 8px;">
-                                        <div class="p-3 bg-light border-bottom d-flex justify-content-between align-items-center rounded-top">
-                                            <h6 class="m-0 font-weight-bold text-dark">My Notifications</h6>
-                                            <span class="badge bg-secondary fs-7">{{ getUnreadCount() }} news</span>
-                                        </div>
-
-                                        <div *ngIf="notifications.length === 0" class="p-4 text-center text-muted">
-                                            <p class="m-0 small">No notifications at the moment.</p>
-                                        </div>
-
-                                        <div *ngFor="let notif of notifications" class="p-3 border-bottom position-relative" [style.background-color]="!notif.isRead ? '#f4f7fc' : '#ffffff'">
-                                            <div class="d-flex justify-content-between align-items-center mb-1">
-                                                <span class="fw-bold text-primary small" style="font-size: 0.85rem;">{{ notif.title }}</span>
-                                                <small class="text-muted" style="font-size: 0.7rem;">{{ notif.createdAt | date:'shortTime' }}</small>
-                                            </div>
-                                            <p class="text-muted m-0 small text-wrap lh-sm" style="font-size: 0.8rem;">
-                                                {{ notif.message }}
-                                            </p>
-                                            <div class="text-end mt-2" *ngIf="!notif.isRead">
-                                                <button class="btn btn-sm p-0 text-primary fw-bold" style="font-size: 0.75rem; text-decoration: none;" (click)="$event.stopPropagation(); markAsRead(notif)">
-                                                    Mark as read
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        <a routerLink="/customer/dashboard" class="dropdown-item text-center text-primary py-2 small fw-bold border-top bg-light rounded-bottom">
-                                            View all on my account
-                                        </a>
-                                    </div>
-                                </div>
-                            <div class="list-inline-item me-3 me-lg-0">
-                                <a class="text-muted position-relative" routerLink="/customer/cart">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-cart" width="25" height="25"
-                                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                        stroke-linecap="round" stroke-linejoin="round">
-                                        <circle cx="9" cy="21" r="1"></circle>
-                                        <circle cx="20" cy="21" r="1"></circle>
-                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6">
-                                        </path>
-                                    </svg>
-                                    <span
-                                        class="position-absolute top-0 start-100 translate-middle badge badge-count rounded-pill bg-primary">
-                                        {{ cartItems.length }}
-                                        <span class="visually-hidden">unread messages</span>
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="header-right__inner d-lg-none my-3 gap-2 d-flex flx-align">
+                <a routerLink="/customer/cart" class="btn btn-outline-main pill w-100">
+                    <i class="fas fa-shopping-cart me-1"></i>Cart ({{ cartItems.length }})
+                </a>
             </div>
         </div>
     </div>
-        <!-- Navs -->
-        <div class="header-bottom">
-            <nav class="navbar navbar-expand-lg navbar-light navbar-default py-0 px-0">
-                <div class="container">
-                    <div class="offcanvas offcanvas-start" tabindex="-1" id="navbar-default-customer">
-                        <div class="offcanvas-header">
-                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+</div>
+<!-- ==================== Mobile Menu End Here ==================== -->
+
+<!-- ==================== Header Start Here ==================== -->
+<header class="header">
+    <div class="container container-full">
+        <nav class="header-inner flx-between">
+            <!-- Logo -->
+            <div class="logo">
+                <a routerLink="/customer/" class="link white-version">
+                    <img src="pubcl/images/logo/logo.png" alt="Logo">
+                </a>
+                <a routerLink="/customer/" class="link dark-version">
+                    <img src="pubcl/images/logo/white-logo.png" alt="Logo">
+                </a>
+            </div>
+
+            <!-- Menu -->
+            <div class="header-menu d-lg-block d-none">
+                <ul class="nav-menu flx-align">
+                    <li class="nav-menu__item">
+                        <a routerLink="/customer/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-menu__link">Home</a>
+                    </li>
+                    <li class="nav-menu__item">
+                        <a routerLink="/customer/dashboard" routerLinkActive="active" class="nav-menu__link">Dashboard</a>
+                    </li>
+                    <li class="nav-menu__item has-submenu">
+                        <a routerLink="/customer/shop" class="nav-menu__link">Shop</a>
+                        <ul class="nav-submenu">
+                            <li class="nav-submenu__item">
+                                <a routerLink="/customer/shop" class="nav-submenu__link"> All Products</a>
+                            </li>
+                            <li class="nav-submenu__item" *ngFor="let category of categories">
+                                <a [routerLink]="['/category-products', category.id]" class="nav-submenu__link"> {{ category.name_cat }}</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-menu__item">
+                        <a routerLink="/customer/about" routerLinkActive="active" class="nav-menu__link">About us</a>
+                    </li>
+                    <li class="nav-menu__item">
+                        <a routerLink="/customer/contact" routerLinkActive="active" class="nav-menu__link">Contact</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Header Right -->
+            <div class="header-right flx-align">
+
+                <!-- Notifications -->
+                <div class="dropdown position-relative">
+                    <button type="button" class="header-right__button" (click)="toggleNotifDropdown($event)">
+                        <i class="fas fa-bell"></i>
+                        <span class="qty-badge font-12" *ngIf="getUnreadCount() > 0">{{ getUnreadCount() }}</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end shadow p-0" [class.show]="isNotifOpen" style="max-height: 380px; overflow-y: auto; width: 320px; border-radius: 12px;">
+                        <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
+                            <h6 class="m-0 fw-bold text-heading">Notifications</h6>
+                            <span class="badge bg-main">{{ getUnreadCount() }} new</span>
                         </div>
-                        <div class="offcanvas-body">
-                            <div class="row w-100 mx-0 py-0 p-0">
-                                <div class="col-12 col-sm-12 col-md-12 col-lg-9 overflow-x-auto px-0">
-                                    <div class="menu-item-list">
-                                        <ul class="navbar-nav align-items-start align-items-lg-center py-0">
-                                            <li class="nav-item me-0 me-lg-2">
-                                                <a class="nav-link" routerLink="/customer/">Home</a>
-                                            </li>
-                                            <li class="nav-item me-0 me-lg-2">
-                                                <a class="nav-link" routerLink="/customer/dashboard" routerLinkActive="active">Dashboard</a>
-                                            </li>
-                                            <li class="nav-item me-0 me-lg-2">
-                                                <a class="nav-link" routerLink="/customer/shop">Shop</a>
-                                            </li>
-                                            
-                                            <li class="nav-item me-0 me-lg-2">
-                                                <a class="nav-link" routerLink="/customer/about">About us</a>
-                                            </li>
-                                            <li class="nav-item me-0 me-lg-2">
-                                                <a class="nav-link" routerLink="/customer/contact">Contact</a>
-                                            </li>
-                                            <li class="nav-item me-0 me-lg-2">
-                                                <a class="nav-link" routerLink="/customer/profile">My Account</a>
-                                            </li>
-                                            <li class="nav-item me-0 me-lg-2">
-                                                <a class="nav-link" (click)="logout()" style="cursor: pointer;">Logout</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+
+                        <div *ngIf="notifications.length === 0" class="p-4 text-center text-body">
+                            <p class="m-0 small">Aucune notification pour le moment.</p>
+                        </div>
+
+                        <div *ngFor="let notif of notifications" class="p-3 border-bottom" [style.background-color]="!notif.isRead ? '#f7f7fb' : '#fff'">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <span class="fw-bold text-main small">{{ notif.title }}</span>
+                                <small class="text-body" style="font-size:0.7rem;">{{ notif.createdAt | date:'shortTime' }}</small>
+                            </div>
+                            <p class="text-body m-0 small lh-sm">{{ notif.message }}</p>
+                            <div class="text-end mt-2" *ngIf="!notif.isRead">
+                                <button class="btn btn-sm p-0 text-main fw-bold" style="font-size:0.75rem;" (click)="$event.stopPropagation(); markAsRead(notif)">
+                                    Mark as read
+                                </button>
                             </div>
                         </div>
+
+                        <a routerLink="/customer/dashboard" (click)="closeNotifDropdown()" class="d-block text-center text-main py-2 small fw-bold border-top">
+                            View all on my account
+                        </a>
                     </div>
                 </div>
-            </nav>
-        </div>
-        <!-- Navs -->
-    </header>
-    <!-- Header Section End -->
-</div>
+
+                <!-- Panier -->
+                <a routerLink="/customer/cart" class="header-right__button cart-btn position-relative">
+                    <img src="pubcl/images/icons/cart.svg" alt="" class="white-version">
+                    <img src="pubcl/images/icons/cart-white.svg" alt="" class="dark-version">
+                    <span class="qty-badge font-12">{{ cartItems.length }}</span>
+                </a>
+
+                <!-- Dark mode -->
+                <div class="theme-switch-wrapper position-relative">
+                    <label class="theme-switch" for="checkbox">
+                        <input type="checkbox" class="d-none" id="checkbox" (change)="toggleDarkMode()">
+                        <span class="slider text-black header-right__button white-version">
+                            <img src="pubcl/images/icons/sun.svg" alt="">
+                        </span>
+                        <span class="slider text-black header-right__button dark-version">
+                            <img src="pubcl/images/icons/moon.svg" alt="">
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Compte -->
+                <div class="header-right__inner gap-3 flx-align d-lg-flex d-none">
+                    <a routerLink="/customer/profile" class="btn btn-outline-main pill">
+                        <span class="icon-left icon"><img src="pubcl/images/icons/user.svg" alt=""></span>
+                        My Account
+                    </a>
+                    <a (click)="logout()" class="btn btn-main pill" style="cursor:pointer;">Logout</a>
+                </div>
+
+                <button type="button" class="toggle-mobileMenu d-lg-none" (click)="openMobileMenu()"> <i class="las la-bars"></i> </button>
+            </div>
+        </nav>
+    </div>
+</header>
+<!-- ==================== Header End Here ==================== -->

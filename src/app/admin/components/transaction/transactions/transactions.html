@@ -2,6 +2,15 @@
   <div class="card-header d-flex justify-content-between align-items-center">
 
     <h3 class="card-title">transactions List</h3>
+            <div class="input-group w-25" style="margin-left: auto;">
+      <input type="text"
+             class="form-control"
+             placeholder="Search..."
+             [(ngModel)]="searchQuery" (keyup.enter)="searchTransactions()">
+      <span class="input-group-text" (click)="searchTransactions()" style="cursor: pointer;">
+        <i class="bi bi-search"></i>
+      </span>
+    </div>
   </div>
   <div class="card-body table-responsive p-0">
     <table class="table table-hover text-nowrap">
@@ -11,20 +20,20 @@
           <th>Order Id</th>
           <th>Amount</th>
           <th>Date</th>
+          <!---<th>Stripe Token</th>--->
           <th width="150">Actions</th>
         </tr>
       </thead>
 
       <tbody>
-      <tr *ngFor="let transaction of transactions">
+      <tr *ngFor="let transaction of paginatedTransactions">
 
 
           <td>{{ transaction.userName }}</td>
           <td>{{ transaction.orderId }}</td>
           <td>{{ transaction.amount | currency:'USD' }}</td>
           <td>{{ transaction.datePayment | date:'dd/MM/yyyy' }}</td>
-
-
+          <!---<td>{{ transaction.stripeToken }}</td>--->
 
           <td>
             <a class="btn btn-sm btn-info me-1"
@@ -37,5 +46,22 @@
         </tr>
       </tbody>
     </table>
+  </div>
+    <div class="card-footer d-flex justify-content-between align-items-center bg-white" *ngIf="transactions.length > 0">
+    <small class="text-muted">
+      Page {{ currentPage }} on {{ totalPages }} (Total : {{ transactions.length }} transactions)
+    </small>
+    
+    <nav aria-label="Page navigation">
+      <ul class="pagination pagination-sm mb-0">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <button class="page-link" (click)="changePage(currentPage - 1)">Previous</button>
+        </li>
+        
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <button class="page-link" (click)="changePage(currentPage + 1)">Next</button>
+        </li>
+      </ul>
+    </nav>
   </div>
 </div>

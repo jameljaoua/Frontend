@@ -1,29 +1,58 @@
-           <!-- Sidebar -->
-                <div class="profile-section">
-                    <img [src]="userImg ?  userImg : 'assets/img/default-avatar.png'" alt="Profile" class="profile-img">
-                    <h5>{{ userName }}</h5>
-                    <p class="text-muted">{{ userRole }}</p>
-                </div>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active" routerLink="/customer/dashboard" routerLinkActive="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/customer/my-orders" routerLinkActive="active"><i class="fas fa-shopping-bag"></i> Orders</a>
-                    </li>
-  
-      
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/customer/profile"  routerLinkActive="active" data-page="profile"><i class="fas fa-user"></i> Profile Details</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" routerLink="/customer/billing" routerLinkActive="active" data-page="Billing"><i class="fas fa-credit-card"></i> Billing</a>
-                    </li>
-                          <li class="nav-item">
-                        <a class="nav-link" routerLink="/customer/my-notifications" routerLinkActive="active" data-page="Notifications"><i class="fas fa-bell"></i> Notifications</a>
-                    </li>
-      
-                    <li class="nav-item">
-                        <a class="nav-link" (click)="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                    </li>
-                </ul>
+<!-- ==================== Dashboard Sidebar Start ==================== -->
+<div class="dashboard-sidebar">
+    <button type="button" class="dashboard-sidebar__close d-lg-none d-flex"><i class="las la-times"></i></button>
+    <div class="dashboard-sidebar__inner">
+
+        <!-- Profil utilisateur -->
+        <div class="profile-section text-center mb-32">
+            <div class="user-profile__thumb mx-auto mb-3" style="width: 80px; height: 80px; border-radius: 50%; overflow: hidden;">
+                <img [src]="userImg ? userImg : 'assets/dpmarket/images/thumbs/user-profile.png'" alt="Profile" class="cover-img w-100 h-100" style="object-fit: cover;">
+            </div>
+            <h6 class="text-heading mb-1">{{ userName }}</h6>
+            <p class="text-body font-14 mb-0">{{ userRole }}</p>
+        </div>
+
+        <!-- Sidebar List Start -->
+        <ul class="sidebar-list">
+            <li class="sidebar-list__item">
+                <a routerLink="/customer/dashboard" routerLinkActive="active" class="sidebar-list__link">
+                    <span class="sidebar-list__icon"><i class="fas fa-tachometer-alt"></i></span>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+            <li class="sidebar-list__item">
+                <a routerLink="/customer/my-orders" routerLinkActive="active" class="sidebar-list__link">
+                    <span class="sidebar-list__icon"><i class="fas fa-shopping-bag"></i></span>
+                    <span class="text">Orders</span>
+                </a>
+            </li>
+            <li class="sidebar-list__item">
+                <a routerLink="/customer/profile" routerLinkActive="active" class="sidebar-list__link">
+                    <span class="sidebar-list__icon"><i class="fas fa-user"></i></span>
+                    <span class="text">Profile Details</span>
+                </a>
+            </li>
+            <li class="sidebar-list__item">
+                <a routerLink="/customer/billing" routerLinkActive="active" class="sidebar-list__link">
+                    <span class="sidebar-list__icon"><i class="fas fa-credit-card"></i></span>
+                    <span class="text">Billing</span>
+                </a>
+            </li>
+            <li class="sidebar-list__item">
+                <a routerLink="/customer/my-notifications" routerLinkActive="active" class="sidebar-list__link">
+                    <span class="sidebar-list__icon"><i class="fas fa-bell"></i></span>
+                    <span class="text">Notifications</span>
+                </a>
+            </li>
+            <li class="sidebar-list__item">
+                <a (click)="logout()" class="sidebar-list__link" style="cursor: pointer;">
+                    <span class="sidebar-list__icon"><i class="fas fa-sign-out-alt"></i></span>
+                    <span class="text">Logout</span>
+                </a>
+            </li>
+        </ul>
+        <!-- Sidebar List End -->
+
+    </div>
+</div>
+<!-- ==================== Dashboard Sidebar End ==================== -->

@@ -1,51 +1,99 @@
-<div class="product-details" *ngIf="product">
-  <div class="container">
-    <section class="mt-5">
-      <div class="row">
-        <div class="col-12 col-lg-5 px-2 px-sm-2 px-md-2 px-lg-0">
-          <div class="product-container">
+<div *ngIf="product">
 
+<!-- ==================== Breadcrumb Start ==================== -->
+<section class="breadcrumb border-bottom p-0 d-block section-bg position-relative z-index-1">
+    <div class="breadcrumb-two">
+        <img src="pubcl/images/gradients/breadcrumb-gradient-bg.png" alt="" class="bg--gradient">
+        <div class="container container-two">
+            <div class="row justify-content-center">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-two-content">
 
-            <div class="image-section">
-                <img [src]="product.processedImg" alt="{{product.name_prod}}" style="height: 300px;width: 382px;">
-            </div>
+                        <ul class="breadcrumb-list flx-align gap-2 mb-2">
+                            <li class="breadcrumb-list__item font-14 text-body">
+                                <a routerLink="/" class="breadcrumb-list__link text-body hover-text-main">Home</a>
+                            </li>
+                            <li class="breadcrumb-list__item font-14 text-body">
+                                <span class="breadcrumb-list__icon font-10"><i class="fas fa-chevron-right"></i></span>
+                            </li>
+                            <li class="breadcrumb-list__item font-14 text-body">
+                                <a routerLink="/shop" class="breadcrumb-list__link text-body hover-text-main">Products</a>
+                            </li>
+                            <li class="breadcrumb-list__item font-14 text-body">
+                                <span class="breadcrumb-list__icon font-10"><i class="fas fa-chevron-right"></i></span>
+                            </li>
+                            <li class="breadcrumb-list__item font-14 text-body">
+                                <span class="breadcrumb-list__text">{{ product.categoryName }}</span>
+                            </li>
+                        </ul>
 
-      
-        <div class="col-md-12 col-lg-7 px-2 px-sm-2 px-md-2 px-lg-0" style="margin-left: 20px;">
-          <div class="col-lg-12 col-md-12 mb-4">
-   
-            <h1 class="h4 font-weight-semibold text-secondary">
-              {{product.name_prod}}
-            </h1>
-            <div class="my-2 d-flex align-items-center">
-              <span class="text-primary h5 font-weight-bold">${{product.price}}</span>
-     
-            </div>
-            <div class="mb-3 border-bottom pb-3">
-              <p class="text-truncate-3">
-                {{product.description_prod}}
-              </p>
-            </div>
+                        <h3 class="breadcrumb-two-content__title mb-3 text-capitalize">{{ product.name_prod }}</h3>
 
-            <div class="my-3 category-tag">
-              <span class="font-weight-bold text-secondary">Category:</span>
-              <a [routerLink]="['/category-products', product.categoryId]" class="text-primary ml-1 text-decoration-none ">{{product.categoryName}}</a>
-            </div>
+                        <div class="breadcrumb-content flx-align gap-3">
+                            <div class="breadcrumb-content__item text-heading fw-500 flx-align gap-2">
+                                <span class="text">Category:
+                                    <a [routerLink]="['/category-products', product.categoryId]" class="link text-main fw-600">{{ product.categoryName }}</a>
+                                </span>
+                            </div>
+                        </div>
 
-     
-            <div class="my-3">
-                  <a [routerLink]="['/login']" class="btn btn-primary btn-block ms-3 py-2"><i class="fa fa-shopping-cart"></i>
-                    <span class="d-none d-md-inline-block d-lg-inline-block">Add to cart</span></a>
+                    </div>
                 </div>
-              </div>
             </div>
-     
-          </div>
-  
         </div>
-     
     </div>
-    </section>
+</section>
+<!-- ==================== Breadcrumb End ==================== -->
 
-  </div>
+<!-- ==================== Product Details Section Start ==================== -->
+<div class="product-details mt-32 padding-b-120">
+    <div class="container container-two">
+        <div class="row gy-4">
+
+            <!-- Colonne gauche : image + description -->
+            <div class="col-lg-8">
+                <div class="product-details">
+                    <div class="product-details__thumb">
+                        <img [src]="product.processedImg" [alt]="product.name_prod"
+                             onerror="this.src='pubcl/images/thumbs/product-placeholder.png'">
+                    </div>
+
+                    <div class="product-details__item">
+                        <h5 class="product-details__title mb-3">Description</h5>
+                        <p class="product-details__desc">{{ product.description_prod }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Colonne droite : prix + achat -->
+            <div class="col-lg-4">
+                <div class="product-sidebar section-bg">
+                    <div class="product-sidebar__top position-relative flx-between gap-1">
+                        <h6 class="product-sidebar__title">{{ product.price | currency }}</h6>
+                    </div>
+
+                    <ul class="sidebar-list">
+                        <li class="sidebar-list__item flx-align gap-2 font-14 fw-300 mb-2">
+                            <span class="icon"><img src="pubcl/images/icons/check-cirlce.svg" alt=""></span>
+                            <span class="text">Qualité vérifiée</span>
+                        </li>
+                        <li class="sidebar-list__item flx-align gap-2 font-14 fw-300">
+                            <span class="icon"><img src="pubcl/images/icons/check-cirlce.svg" alt=""></span>
+                            <span class="text">Livraison instantanée après paiement</span>
+                        </li>
+                    </ul>
+
+                    <button type="button" class="btn btn-main d-flex w-100 justify-content-center align-items-center gap-2 pill px-sm-5 mt-32"
+                            [routerLink]="['/login']">
+                        <img src="pubcl/images/icons/add-to-cart.svg" alt="">
+                        Add To Cart
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- ==================== Product Details Section End ==================== -->
+
 </div>

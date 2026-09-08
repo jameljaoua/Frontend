@@ -1,543 +1,1009 @@
-/* 
-Name                 : RivoraMart – Free Multipurpose Bootstrap 5 eCommerce Template
-Author               : TemplateRise
-Url                  : https://www.templaterise.com/template/rivoramart-free-multipurpose-bootstrap-5-ecommerce-template
-*/
-
-$(function () {
-  var tooltipTriggerList = [].slice.call(
-    document.querySelectorAll('[data-bs-toggle="tooltip"]')
-  );
-
-  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl);
-  });
-
-  // new WOW().init();
-
-  $(".offer-slider").owlCarousel({
-    responsiveClass: true,
-    loop: true,
-    margin: 0,
-    autoplay: true,
-    dots: false,
-    nav: false,
-    responsive: {
-      0: {
-        items: 1,
-      },
-      600: {
-        items: 1,
-      },
-      1000: {
-        items: 1,
-      },
-    },
-  });
-
-  $(".banner-slider").owlCarousel({
-    responsiveClass: true,
-    loop: true,
-    margin: 0,
-    autoplay: true,
-    dots: true,
-    nav: false,
-    responsive: {
-      0: {
-        items: 1,
-      },
-      600: {
-        items: 1,
-      },
-      1000: {
-        items: 1,
-      },
-    },
-  });
-
-  $(".banner-slider").on("changed.owl.carousel", function (event) {
-    new WOW().init();
-  });
-
-  $(".category-slider").owlCarousel({
-    responsiveClass: true,
-    loop: true,
-    margin: 50,
-    autoplay: true,
-    dots: false,
-    nav: false,
-    responsive: {
-      0: {
-        items: 3,
-      },
-      600: {
-        items: 4,
-      },
-      992: {
-        items: 7,
-      },
-      1200: {
-        items: 8,
-      },
-    },
-  });
-
-
-  $(".blog-slider").owlCarousel({
-    responsiveClass: true,
-    loop: false,
-    margin: 40,
-    autoplay: false,
-    responsive: {
-      0: {
-        nav: false,
-        dots: true,
-        items: 1,
-      },
-      600: {
-        nav: false,
-        dots: false,
-        items: 2,
-      },
-      1000: {
-        nav: true,
-        dots: false,
-        items: 3,
-      },
-    },
-  });
-
-  /////// Nice Select ///
-  $(".nice-option").niceSelect();
-
-  //// Price Range ///
-
-  var slider = document.getElementById("priceRange");
-  var priceRangeValue = document.getElementById("priceRange-value");
-
-  // Check if the elements exist
-  if (slider && priceRangeValue) {
-    // Your code for creating the slider and updating the input field
-    noUiSlider.create(slider, {
-      start: [20, 80],
-      connect: true,
-      range: {
-        min: 0,
-        max: 100,
-      },
-      format: {
-        to: function (value) {
-          return Math.round(value);
-        },
-        from: function (value) {
-          return value.replace("$", "");
-        },
-      },
-    });
-
-    // Update input field with slider value
-    slider.noUiSlider.on("update", function (values, handle) {
-      priceRangeValue.textContent = "$" + values[0] + " - $" + values[1];
-    });
-  }
-
-  // if ($('#product-img-zoom').length > 0) {
-  //     ZoomActive();
-  // }
-
-  // function ZoomActive() {
-  //     $('#product-img-zoom').ezPlus({
-  //         zoomType: 'inner',
-  //         cursor: 'crosshair',
-  //         borderSize: 0
-  //     });
-  // }
-
-  // var $sliderSingle = initSlider();
-
-  // // Initialize the slider
-  // function initSlider() {
-  //   if ($(".slider-nav").length > 0) {
-  //     var $sliderSingle = $(".slider-nav").slick({
-  //       slidesToShow: 4,
-  //       slidesToScroll: 1,
-  //       arrows: false,
-  //       dots: false,
-  //       focusOnSelect: true,
-  //     });
-  //     return $sliderSingle;
-  //   }
-  //   return null;
-  // }
-
-  // // Function to get the index of the active slide
-  // function getActiveSlideIndex() {
-  //   if ($sliderSingle) {
-  //     return $sliderSingle.slick("slickCurrentSlide");
-  //   }
-  //   return -1;
-  // }
-
-  // // Function to get the image source of the active slide
-  // function getImageOfActiveSlide() {
-  //   var activeSlideIndex = getActiveSlideIndex();
-  //   if (activeSlideIndex !== -1) {
-  //     var $activeSlide = $(".slider-nav .slick-slide").eq(activeSlideIndex);
-  //     var $img = $activeSlide.find("img");
-  //     var imgSrc = $img.attr("src");
-  //     return imgSrc;
-  //   }
-  //   return null;
-  // }
-
-  // // Function to update the active image and zoom
-  // function updateActiveImage() {
-  //   var activeImgSrc = getImageOfActiveSlide();
-  //   if (activeImgSrc && $("#product-img-active").length > 0) {
-  //     $("#product-img-active img").attr("src", activeImgSrc);
-  //   }
-  // }
-
-  // // Event listener for slider change
-  // if ($sliderSingle) {
-  //   $sliderSingle.on("afterChange", function (event, slick, currentSlide) {
-  //     updateActiveImage();
-  //   });
-  // }
-
-  //////  Counter Increament
-
-  $(".count-increament").click(function (e) {
-    var count = $(this).parent().find("input").val();
-    count++;
-    $(this).parent().find("input").val(count);
-  });
-
-  //////  Counter Decreament
-
-  $(".count-decreament").click(function (e) {
-    var count = $(this).parent().find("input").val();
-    count--;
-    if (count > 0) {
-      $(this).parent().find("input").val(count);
-    }
-  });
-
-  $(".new-arrivals-slider").owlCarousel({
-    loop: true,
-    margin: 15,
-    nav: true,
-    dots: false,
-    responsive: {
-      0: { items: 1 },
-      576: { items: 2 },
-      992: { items: 3 },
-    },
-  });
-
-  $(".deal-slider").owlCarousel({
-    loop: true,
-    margin: 15,
-    nav: true,
-    dots: false,
-    responsive: {
-      0: { items: 1 },
-      576: { items: 1 },
-      992: { items: 1 },
-    },
-  });
-
-  $(".product-slider").owlCarousel({
-    loop: true,
-    margin: 15,
-    nav: false,
-    dots: false,
-    responsive: {
-      0: { items: 1 },
-      576: { items: 2 },
-      992: { items: 3 },
-    },
-  });
-
-  $(".product-recommended-slider").owlCarousel({
-    loop: true,
-    margin: 15,
-    nav: true,
-    dots: false,
-    responsive: {
-      0: { items: 1 },
-      576: { items: 2 },
-      992: { items: 4 },
-    },
-  });
-
-  function startCountdown(element) {
-    let secondsLeft = parseInt(element.getAttribute("data-second"));
-
-    function updateTimer() {
-      if (secondsLeft <= 0) {
-        element.innerHTML = "<span class='text-danger'>Deal Expired</span>";
-        return;
-      }
-
-      const days = Math.floor(secondsLeft / (60 * 60 * 24));
-      const hours = Math.floor((secondsLeft % (60 * 60 * 24)) / (60 * 60));
-      const minutes = Math.floor((secondsLeft % (60 * 60)) / 60);
-      const seconds = secondsLeft % 60;
-
-      element.querySelector("#days").innerText = days;
-      element.querySelector("#hours").innerText = hours;
-      element.querySelector("#minutes").innerText = minutes;
-      element.querySelector("#seconds").innerText = seconds;
-
-      secondsLeft--;
-      setTimeout(updateTimer, 1000);
-    }
-
-    updateTimer();
-  }
-
-  // Run countdown for all elements with class "countdown"
-  document.querySelectorAll(".countdown").forEach(startCountdown);
-
-  ////// Rating Section ///////
-
-  const stars = document.querySelectorAll(".star");
-  const ratingValue = document.getElementById("rating-number");
-
-  if (ratingValue) {
-    // Check if the element exists
-    stars.forEach((star) => {
-      star.addEventListener("click", function () {
-        const selectedValue = this.getAttribute("data-value");
-        ratingValue.value = selectedValue; // Update the value only if the element exists
-        stars.forEach((s) => {
-          s.classList.remove("selected");
-          if (s.getAttribute("data-value") <= selectedValue) {
-            s.classList.add("selected");
-          }
-        });
-      });
-    });
-  }
-
-  const thumbContainer = document.getElementById("thumbContainer");
-  const thumbUp = document.getElementById("thumbUp");
-  const thumbDown = document.getElementById("thumbDown");
-
-  const container = document.getElementById("mainImageContainer");
-  const productImage = document.getElementById("productImage");
-  const lens = document.querySelector(".magnifier-lens");
-  const preview = document.querySelector(".magnifier-preview");
-  const previewImg = document.getElementById("zoomedImage");
-
-  if (
-    thumbContainer &&
-    thumbUp &&
-    thumbDown &&
-    container &&
-    productImage &&
-    lens &&
-    preview &&
-    previewImg
-  ) {
-    // Create thumbnails data
-    const thumbnailsData = Array.from(
-      thumbContainer.querySelectorAll(".thumbnail")
-    ).map((el, index) => ({
-      src: el.dataset.image,
-      thumbSrc: el.querySelector("img").src,
-      active: index === 0, // First one is active by default
-    }));
-
-    let startIndex = 0;
-    let visibleCount = getVisibleCount();
-
-    // Get visible count based on device width
-    function getVisibleCount() {
-      if (window.innerWidth < 768) {
-        return 3; // Mobile
-      } else if (window.innerWidth < 1024) {
-        return 4; // Tablet
-      } else {
-        return 4; // Desktop
-      }
-    }
-
-    // Render thumbnails
-    function renderThumbnails() {
-      thumbContainer.innerHTML = "";
-      const visibleThumbs = thumbnailsData.slice(
-        startIndex,
-        startIndex + visibleCount
-      );
-
-      visibleThumbs.forEach((thumb) => {
-        const div = document.createElement("div");
-        div.className = "thumbnail" + (thumb.active ? " active" : "");
-        div.dataset.image = thumb.src;
-        div.innerHTML = `<img src="${thumb.thumbSrc}" alt="">`;
-
-        div.addEventListener("click", () => {
-          // Update all thumbnails
-          thumbnailsData.forEach((t) => (t.active = false));
-          thumb.active = true;
-
-          // Update main image and zoomed image
-          productImage.src = thumb.src;
-          previewImg.src = thumb.src;
-
-          // Re-render thumbnails
-          renderThumbnails();
-        });
-
-        thumbContainer.appendChild(div);
-      });
-
-      // Arrow state
-      thumbUp.classList.toggle("disabled", startIndex === 0);
-      thumbDown.classList.toggle(
-        "disabled",
-        startIndex + visibleCount >= thumbnailsData.length
-      );
-    }
-
-    // Thumbnail navigation
-    thumbUp.addEventListener("click", () => {
-      if (startIndex > 0) {
-        startIndex--;
-        renderThumbnails();
-      }
-    });
-
-    thumbDown.addEventListener("click", () => {
-      if (startIndex + visibleCount < thumbnailsData.length) {
-        startIndex++;
-        renderThumbnails();
-      }
-    });
-
-    // Initialize thumbnails
-    renderThumbnails();
-
-    // Magnifier logic
-    container.addEventListener("mousemove", moveLens);
-    container.addEventListener("mouseenter", showMagnifier);
-    container.addEventListener("mouseleave", hideMagnifier);
-
-    function showMagnifier() {
-      lens.style.display = "block";
-      preview.style.display = "block";
-    }
-
-    function hideMagnifier() {
-      lens.style.display = "none";
-      preview.style.display = "none";
-    }
-
-    function moveLens(e) {
-      // Prevent default behavior
-      e.preventDefault();
-
-      // Get the position of the image
-      const rect = productImage.getBoundingClientRect();
-      const lensWidth = lens.offsetWidth;
-      const lensHeight = lens.offsetHeight;
-
-      // Calculate the position of the lens
-      let x = e.clientX - rect.left - lensWidth / 2;
-      let y = e.clientY - rect.top - lensHeight / 2;
-
-      // Keep lens inside image boundaries
-      x = Math.max(0, Math.min(x, rect.width - lensWidth));
-      y = Math.max(0, Math.min(y, rect.height - lensHeight));
-
-      // Set lens position
-      lens.style.left = x + "px";
-      lens.style.top = y + "px";
-
-      // Calculate the zoom ratio (3x)
-      const ratio = 3;
-
-      // Calculate background position for zoomed image
-      const bgX = -(x * ratio);
-      const bgY = -(y * ratio);
-
-      // Set zoomed image position
-      previewImg.style.left = bgX + "px";
-      previewImg.style.top = bgY + "px";
-    }
-  }
-
-
-  // Sidebar Navigation
-
-  const navLinks = document.querySelectorAll(".sidebar .nav-link");
-  const pages = document.querySelectorAll(".page-content");
-
-  navLinks.forEach(link => {
-    link.addEventListener("click", e => {
-      const pageId = link.getAttribute("data-page");
-
-      // Only prevent default if it's not logout (or any external link)
-      if (pageId) {
-        e.preventDefault();
-
-        // Remove active class from all links
-        navLinks.forEach(l => l.classList.remove("active"));
-        link.classList.add("active");
-
-        // Hide all pages
-        pages.forEach(page => page.classList.remove("active"));
-
-        // Show selected page
-        document.getElementById(pageId).classList.add("active");
-      }
-      // else: normal navigation for logout
-    });
-  });
-
-
-  $("#sameShippingAddress").change(function () {
-    if ($(this).is(":checked")) {
-      $(".shipping-details").hide();
-    } else {
-      $(".shipping-details").show();
-    }
-  });
-
-
-    $('.toggle-password').click(function() {
-      var input = $(this).siblings('.input-password');
-      var isPassword = input.attr('type') === 'password';
+(function ($) {
+  "use strict";
   
-      // Toggle input type
-      input.attr('type', isPassword ? 'text' : 'password');
-  
-      // Toggle icon based on input type
-      var icon = isPassword 
-          ? `<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                  <circle cx="12" cy="12" r="3"></circle>
-              </svg>` 
-          : `<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1">
-                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                  <line x1="1" y1="1" x2="23" y2="23"></line>
-              </svg>`;
+  // ==========================================
+  //      Start Document Ready function
+  // ==========================================
+  $(document).ready(function () {
+
+    // ============================== Light & Dark Mode Js Start=====================
+    const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+    const currentTheme = localStorage.getItem('theme');
+
+    if (currentTheme) {
+        document.documentElement.setAttribute('data-theme', currentTheme);
       
-      $(this).html(icon);
+        if (currentTheme === 'dark') {
+            toggleSwitch.checked = true;
+        }
+    }
+    function switchTheme(e) {
+        if (e.target.checked) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        }
+        else {        
+          document.documentElement.setAttribute('data-theme', 'light');
+          localStorage.setItem('theme', 'light');
+        }    
+    }
+    toggleSwitch.addEventListener('change', switchTheme, false);
+  // ============================== Light & Dark Mode Js End============================== 
+
+  // ============================== Auto Suggestion Js Start ============================== 
+  $('.auto-suggestion-input').on('input', function (event) {
+    event.stopPropagation(); 
+    $(this).addClass('active'); 
+    $('.auto-suggestion-list').addClass('active'); 
+  });
+
+  $('body').on('click', function () {
+    $('.auto-suggestion-input').removeClass('active'); 
+    $('.auto-suggestion-list').removeClass('active'); 
+  }); 
+  // ============================== Auto Suggestion Js End ============================== 
+
+
+  // ============================== Auto Suggestion Text value place to the input field Js End ============================== 
+  $('.auto-suggestion-list__item').on('click', function (event) {
+    event.preventDefault();
+    const textValue = $(this).text().trim();
+    $('.auto-suggestion-input').val(textValue);
+  }); 
+  // ============================== Auto Suggestion Text value place to the input field Js End ============================== 
+    
+
+  // ============== Mobile Menu Sidebar Js Start ========
+  $('.toggle-mobileMenu').on('click', function () {
+    $('.mobile-menu').addClass('active');
+    $('.side-overlay').addClass('show');
+    $('body').addClass('scroll-hide-sm');
+  }); 
+
+  $('.close-button, .side-overlay').on('click', function () {
+    $('.mobile-menu').removeClass('active');
+    $('.side-overlay').removeClass('show');
+    $('body').removeClass('scroll-hide-sm');
+  }); 
+  // ============== Mobile Menu Sidebar Js End ========
+  
+  // ============== Mobile Nav Menu Dropdown Js Start =======================
+  var windowWidth = $(window).width(); 
+  
+  $('.has-submenu').on('click', function () {
+    var thisItem = $(this); 
+    
+    if(windowWidth < 992) {
+      if(thisItem.hasClass('active')) {
+        thisItem.removeClass('active')
+      } else {
+        $('.has-submenu').removeClass('active')
+        $(thisItem).addClass('active')
+      }
+      
+      var submenu = thisItem.find('.nav-submenu');
+      
+      $('.nav-submenu').not(submenu).slideUp(300);
+      submenu.slideToggle(300);
+    }
+    
+  });
+  // ============== Mobile Nav Menu Dropdown Js End =======================
+  
+  // ======================== Tooltip Js Start ====================
+  const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+  // ======================== Tooltip Js End ====================
+    
+  // ===================== Scroll Back to Top Js Start ======================
+  var progressPath = document.querySelector('.progress-wrap path');
+  var pathLength = progressPath.getTotalLength();
+  progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
+  progressPath.style.strokeDasharray = pathLength + ' ' + pathLength;
+  progressPath.style.strokeDashoffset = pathLength;
+  progressPath.getBoundingClientRect();
+  progressPath.style.transition = progressPath.style.WebkitTransition = 'stroke-dashoffset 10ms linear';
+  var updateProgress = function () {
+    var scroll = $(window).scrollTop();
+    var height = $(document).height() - $(window).height();
+    var progress = pathLength - (scroll * pathLength / height);
+    progressPath.style.strokeDashoffset = progress;
+  }
+  updateProgress();
+  $(window).scroll(updateProgress);
+  var offset = 50;
+  var duration = 550;
+  jQuery(window).on('scroll', function() {
+    if (jQuery(this).scrollTop() > offset) {
+      jQuery('.progress-wrap').addClass('active-progress');
+    } else {
+      jQuery('.progress-wrap').removeClass('active-progress');
+    }
+  });
+  jQuery('.progress-wrap').on('click', function(event) {
+    event.preventDefault();
+    jQuery('html, body').animate({scrollTop: 0}, duration);
+    return false;
+  })
+  // ===================== Scroll Back to Top Js End ======================
+
+  // ========================== add active class to ul>li top Active current page Js Start =====================
+  function dynamicActiveMenuClass(selector) {
+    let FileName = window.location.pathname.split("/").reverse()[0];
+
+    selector.find("li").each(function () {
+      let anchor = $(this).find("a");
+      if ($(anchor).attr("href") == FileName) {
+        $(this).addClass("activePage");
+      }
+    });
+    // if any li has activePage element add class
+    selector.children("li").each(function () {
+      if ($(this).find(".activePage").length) {
+        $(this).addClass("activePage");
+      }
+    });
+    // if no file name return
+    if ("" == FileName) {
+      selector.find("li").eq(0).addClass("activePage");
+    }
+  }
+  if ($('ul').length) {
+    dynamicActiveMenuClass($('ul'));
+  }
+  // ========================== add active class to ul>li top Active current page Js End =====================
+
+  // ================================ Remove Sale Offer Js Start =============================
+  $('.sale-offer__close').on('click', function () {
+    $(this).closest('.sale-offer').addClass('d-none')
+  }); 
+  // ================================ Remove Sale Offer Js End =============================
+  
+  // ================================ CountDown Js Start =============================
+  if (document.querySelector('.countdown')) {
+    const myCountdown = new countdown({
+      target: '.countdown',
+      dayWord: ' Days:',
+      hourWord: ' Hour: ',
+      minWord: ' Min:',
+      secWord: ' Sec:'
+    });
+  }
+  // ================================ CountDown Js End =============================
+  
+  // ========================= popular Category Js Start ==============
+  $('.popular-slider').slick({
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    speed: 900,
+    infinite: true,
+    prevArrow: '<button type="button" class="slick-prev"><i class="las la-arrow-left"></i></button>',
+    nextArrow: '<button type="button" class="slick-next"><i class="las la-arrow-right"></i></button>',
+    responsive: [
+      {
+        breakpoint: 1199,
+        settings: {
+          slidesToShow: 5,
+        }
+      },
+      {
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 4,
+        }
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 3,
+        }
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+    ]
+  });
+  // ========================= popular Category Js End ===================
+  
+  // ========================= Wishlist Js Start ===================
+  $('.product-item__wishlist').on('click', function() {
+    $(this).toggleClass('active')
+  }); 
+  // ========================= Wishlist Js End ===================
+  
+  // ========================= Selling Product Js Start ==============
+  $('.selling-product-slider').slick({
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: true,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    speed: 900,
+    infinite: true,
+    prevArrow: '<button type="button" class="slick-prev"><i class="las la-arrow-left"></i></button>',
+    nextArrow: '<button type="button" class="slick-next"><i class="las la-arrow-right"></i></button>',
+    responsive: [
+      {
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 1,
+        }
+      },
+    ]
+  });
+  // ========================= Selling Product Js End ===================
+
+  // ========================= Testimonial Slider Js Start ==============
+  $('.testimonial-slider').slick({
+    slidesToShow: 2,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: true,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    speed: 900,
+    infinite: true,
+    prevArrow: '<button type="button" class="slick-prev"><i class="las la-arrow-left"></i></button>',
+    nextArrow: '<button type="button" class="slick-next"><i class="las la-arrow-right"></i></button>',
+    responsive: [
+      {
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 1,
+        }
+      },
+    ]
+  });
+  // ========================= Testimonial Slider Js End ===================
+  
+  // ========================= Selling Product Js Start ==============
+  $('.resource-slider').slick({
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: true,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    speed: 900,
+    infinite: true,
+    prevArrow: '<button type="button" class="slick-prev"><i class="las la-arrow-left"></i></button>',
+    nextArrow: '<button type="button" class="slick-next"><i class="las la-arrow-right"></i></button>',
+    responsive: [
+      {
+        breakpoint: 1199,
+        settings: {
+          slidesToShow: 3,
+        }
+      },
+      {
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 1,
+        }
+      },
+    ]
+  });
+  // ========================= Selling Product Js End ===================
+
+  // ========================= Brand Slider Js Start ==============
+  $('.brand-slider').slick({
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: false,
+    draggable: true,
+    speed: 900,
+    infinite: true,
+    prevArrow: '<button type="button" class="slick-prev"><i class="las la-arrow-left"></i></button>',
+    nextArrow: '<button type="button" class="slick-next"><i class="las la-arrow-right"></i></button>',
+    responsive: [
+      {
+        breakpoint: 1199,
+        settings: {
+          slidesToShow: 4,
+        }
+      },
+      {
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 4,
+        }
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 3,
+        }
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+    ]
+  });
+  // ========================= Brand Slider Js End ===================
+
+
+  // ========================= Brand Three Slider Js Start ==============
+  $('.brand-three-slider').slick({
+    slidesToShow: 7,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: false,
+    draggable: true,
+    speed: 900,
+    infinite: true,
+    prevArrow: '<button type="button" class="slick-prev"><i class="las la-arrow-left"></i></button>',
+    nextArrow: '<button type="button" class="slick-next"><i class="las la-arrow-right"></i></button>',
+    responsive: [
+      {
+        breakpoint: 1199,
+        settings: {
+          slidesToShow: 6,
+        }
+      },
+      {
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 5,
+        }
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 4,
+        }
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 3,
+        }
+      },
+      {
+        breakpoint: 425,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+    ]
+  });
+  // ========================= Brand Three Slider Js End ===================
+
+  // ========================= Service Item Js Start ===================
+  $('.service-three-item__button').on('click', function () {
+    var $serviceItem = $(this).closest('.service-three-item');
+    
+    if ($serviceItem.hasClass('active')) {
+      $serviceItem.removeClass('active');
+    } else {
+      $('.service-three-item').removeClass('active');
+      $serviceItem.addClass('active');
+    }
+  });
+  // ========================= Service Item Js End ===================
+  
+  // ========================= Latest Project Slider Into Tab Js Start ==============
+  $('.latest-project-slider').slick({
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    speed: 900,
+    infinite: true,
+    prevArrow: '<button type="button" class="slick-prev"><i class="las la-arrow-left"></i></button>',
+    nextArrow: '<button type="button" class="slick-next"><i class="las la-arrow-right"></i></button>',
+    responsive: [
+      {
+        breakpoint: 1199,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 1,
+        }
+      },
+    ]
+  });
+  // ========================= Latest Project Slider Into Tab Js End ===================
+
+  // ========================= Selling Product Js Start ==============
+  $('.team-item-slider').slick({
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: true,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    speed: 900,
+    infinite: true,
+    prevArrow: '<button type="button" class="slick-prev"><i class="las la-arrow-left"></i></button>',
+    nextArrow: '<button type="button" class="slick-next"><i class="las la-arrow-right"></i></button>',
+    responsive: [
+      {
+        breakpoint: 1199,
+        settings: {
+          slidesToShow: 3,
+        }
+      },
+      {
+        breakpoint: 991,
+        settings: {
+          slidesToShow: 2,
+        }
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 1,
+        }
+      },
+    ]
+  });
+  // ========================= Selling Product Js End ===================
+
+  // ========================= Testimonial Slider Js Start ===================
+  $('.testimonial-three-thumb-slider').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: true,
+    dots: true,
+    fade: true,
+    asNavFor: '.testimonial-three-item-slider',
+    prevArrow: '<button type="button" class="slick-prev"><i class="las la-arrow-left"></i></button>',
+    nextArrow: '<button type="button" class="slick-next"><i class="las la-arrow-right"></i></button>',
+    responsive: [
+      {
+        breakpoint: 991,
+        settings: {
+          dots: false,
+        }
+      },
+    ]
+  });
+  $('.testimonial-three-item-slider').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    asNavFor: '.testimonial-three-thumb-slider',
+    dots: false,
+    arrows: false,
+    centerMode: true,
+    focusOnSelect: true
+  });
+  // ========================= Testimonial Slider Js End ===================
+
+  // ========================== Text Slide Js Start =====================
+  $('.text-slider').marquee({
+    pauseOnHover: true,
+    
+    allowCss3Support: true,
+    css3easing: 'linear',
+    easing: 'linear',
+    delayBeforeStart: 1000,
+    duration: 7000,
+    gap: 20,
+    pauseOnCycle: false,
+    startVisible: false
+  });
+  // ========================== Text Slide Js End =====================
+  
+  
+  // ========================= Payment Method Slider Js Start ==============
+  $('.payment-method__slider').slick({
+    slidesToShow: 10,
+    slidesToScroll: 1,
+    autoplay: false,
+    autoplaySpeed: 2000,
+    speed: 1500,
+    dots: false,
+    pauseOnHover: true,
+    arrows: true,
+    draggable: true,
+    speed: 900,
+    infinite: true,
+    prevArrow: '<button type="button" class="slick-prev"><i class="las la-arrow-left"></i></button>',
+    nextArrow: '<button type="button" class="slick-next"><i class="las la-arrow-right"></i></button>',
+    responsive: [
+      {
+        breakpoint: 1299,
+        settings: {
+          slidesToShow: 8,
+        }
+      },
+      {
+        breakpoint: 1199,
+        settings: {
+          slidesToShow: 6,
+        }
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 4,
+        }
+      },
+      {
+        breakpoint: 575,
+        settings: {
+          slidesToShow: 4,
+        }
+      },
+      {
+        breakpoint: 425,
+        settings: {
+          slidesToShow: 3,
+        }
+      },
+    ]
+  });
+  // ========================= Payment Method Slider Js End ===================
+
+  // ========================= Follow Button Js Start ==========================
+  $('.follow-btn').on('click', function () {
+    var buttonText = $(this).text();
+    $(this).text(buttonText === 'Follow' ? 'Following' : 'Follow');
+    $(this).toggleClass('active')
+  });
+  // ========================= Follow Button Js End ==========================
+
+  // ========================= Text Rotation Js Start ==========================
+    const text = document.querySelector(".circle__text");
+
+    if(text) {
+      text.innerHTML = text.innerText
+      .split("")
+      .map(
+        (char, i) => `<span style="transform:rotate(${i * 11.5}deg)">${char}</span>`
+        )
+      .join("");
+    }
+
+    // Text Two
+    const textTwo = document.querySelector(".circle__desc");
+
+    if(textTwo) {
+      textTwo.innerHTML = textTwo.innerText
+      .split("")
+      .map(
+        (char, i) => `<span style="transform:rotate(${i * 11.5}deg)">${char}</span>`
+        )
+      .join("");
+    }
+  // ========================= Text Rotation Js End ==========================
+  
+  // ========================= Counter Up Js End ===================
+  const counterUp = window.counterUp.default;
+
+  const callback = (entries) => {
+    entries.forEach((entry) => {
+      const el = entry.target;
+      if (entry.isIntersecting && !el.classList.contains('is-visible')) {
+        counterUp(el, {
+          duration: 3500,
+          delay: 16,
+        });
+        el.classList.add('is-visible');
+      }
+    });
+  };
+
+  const IO = new IntersectionObserver(callback, { threshold: 1 });
+
+  // Banner statistics Counter
+  const statisticsCounter = document.querySelectorAll('.statistics__amount');
+  if (statisticsCounter.length > 0) {
+    statisticsCounter.forEach((counterNumber) => {
+      IO.observe(counterNumber);
+    });
+  }
+
+  // performance Count
+  const performanceCount = document.querySelectorAll('.performance-content__count');
+  if (performanceCount.length > 0) {
+    performanceCount.forEach((counterNumber) => {
+      IO.observe(counterNumber);
+    });
+  }
+  // ========================= Counter Up Js End ===================
+
+  // ========================= Filter Sidebar Js Start ===================
+  $('.filter-sidebar__button').on('click', function () {
+    $(this).toggleClass('active')
+    $(this).siblings('.filter-sidebar__content').slideToggle(); 
+  }); 
+  // ========================= Filter Sidebar Js End ===================
+
+  // ========================== Grid & List View Js Start =====================
+  $('.list-button').on('click', function () {
+    $('body').addClass('list-view'); 
+    $(this).addClass('active'); 
+    $('.grid-button').removeClass('active'); 
+  }); 
+  $('.grid-button').on('click', function () {
+    $('body').removeClass('list-view'); 
+    $('.list-button').removeClass('active'); 
+    $(this).addClass('active'); 
+  }); 
+  // ========================== Grid & List View Js End =====================
+
+  // ========================== Filter Form Show hide Js Start =====================
+  $('.filter-tab__button').on('click', function () {
+    $('.filter-form').slideToggle(); 
+    $(this).toggleClass('active'); 
+  }); 
+  // ========================== Filter Form Show hide Js End =====================
+
+  // ========================== Filter Sidebar Show hide Js Start =====================
+  $('.sidebar-btn').on('click', function () {
+    $('.filter-sidebar').addClass('show'); 
+    $('.side-overlay').addClass('show'); 
+    $('body').addClass('scroll-hide-sm'); 
+  }); 
+  $('.filter-sidebar__close, .side-overlay').on('click', function () {
+    $('.filter-sidebar').removeClass('show'); 
+    $('.side-overlay').removeClass('show'); 
+    $('body').removeClass('scroll-hide-sm'); 
+  }); 
+  // ========================== Filter Sidebar Show hide Js End =====================
+
+  // ========================= Social Share Js Start ===========================
+  $('.social-share__button').on('click', function(event) {
+    event.stopPropagation(); 
+    $('.social-share__icons').toggleClass('show')
+  }); 
+
+  $('body').on('click', function(event) {
+    $('.social-share__icons').removeClass('show')
+  }); 
+
+  // For device width size js start
+  // let screenSize = screen.width
+  // alert(' Your Screen Size is: ' + screenSize + 'pixel'); 
+  // For device width size js start
+
+  let socialShareBtn = $('.social-share');
+  // Check if the element exists
+  if (socialShareBtn.length > 0) {
+    let leftDistance = socialShareBtn.offset().left;
+    let rightDistance = $(window).width() - (leftDistance + socialShareBtn.outerWidth());
+
+    if (leftDistance < rightDistance) {
+      $('.social-share__icons').addClass('left');
+    }
+  }
+  // ========================= Social Share Js End ===========================
+
+  // ========================= License Dropdown Js Start ===========================
+  $('.btn-has-dropdown').on('click', function (event) {
+    event.stopPropagation(); 
+    $('.license-dropdown').toggleClass('active'); 
+  }); 
+
+  $('.license-dropdown').on('click', function(event) {
+    event.stopPropagation(); 
+  }); 
+
+  $('body').on('click', function () {
+    $('.license-dropdown').removeClass('active'); 
+  }); 
+  // ========================= License Dropdown Js End ===========================
+
+  // ========================= Select License Option Js Start ===========================
+  $('.license-dropdown__item').on('click', function() {
+    $('.license-dropdown__item').removeClass('activeSelectItem');
+    $(this).addClass('activeSelectItem');
+    let titleText = $(this).find('.license-dropdown__title').text(); 
+    $('.btn-has-dropdown').text(""); 
+    $('.btn-has-dropdown').text(titleText); 
+    $('.license-dropdown').removeClass('active'); 
+  }); 
+  // ========================= Select License Option Js End ===========================
+
+  
+  // ========================== Increment & Decrement Js Start =====================
+  $(function() {
+    $('[data-decrease]').click(decrease);
+    $('[data-increase]').click(increase);
+    $('[data-value]').on('change input', valueChange);
   });
   
+  function decrease() {
+    var value = $(this).parent().find('[data-value]').val();
+    if(value > 1) {
+      value--;
+      $(this).parent().find('[data-value]').val(value);
+    }
+  }
+  
+  function increase() {
+    var value = $(this).parent().find('[data-value]').val();
+    if(value < 100) {
+      value++;
+      $(this).parent().find('[data-value]').val(value);
+    }
+  }
+  
+  function valueChange() {
+    var value = $(this).val();
+    if(value == undefined || isNaN(value) == true || value <= 0) {
+      $(this).val(1);
+    } else if(value >= 101) {
+      $(this).val(100);
+    }
+  }
+  // ========================== Increment & Decrement Js End =====================
 
-  $('#filter-section-close').click(function() {
-      var myOffcanvasEl = document.getElementById('filter-section');
-      var offcanvasInstance = bootstrap.Offcanvas.getInstance(myOffcanvasEl);
+  // ========================== Cart Item Delete Js Start =====================
+  $('.delete-btn').on('click', function() {
+    $(this).closest('tr').addClass('d-none')
+  }); 
+  // ========================== Cart Item Delete Js End =====================
 
-      if (offcanvasInstance) {
-          offcanvasInstance.hide();
-      } else {
-          new bootstrap.Offcanvas(myOffcanvasEl).hide();
+  // ========================== Password Show Hide Js Start =====================
+  $(".toggle-password").on('click', function() {
+    var input = $($(this).attr("id"));
+
+    if (input.attr("type") == "password") {
+      input.attr("type", "text");
+    } else {
+      input.attr("type", "password");
+    }
+  });
+  
+  $(".toggle-password-two").on('click', function() {
+    $(this).toggleClass(" la-eye-slash");
+    var input = $($(this).attr("id"));
+
+    if (input.attr("type") == "password") {
+      input.attr("type", "text");
+    } else {
+      input.attr("type", "password");
+    }
+  });
+  // ========================== Password Show Hide Js End =====================
+
+  // ========================== Dashboard Sidebar Js Start =====================
+  $('.bar-icon, .arrow-icon').on('click', function () {
+    $('.dashboard').toggleClass('active'); 
+  }); 
+
+  $('.bar-icon').on('click', function () {
+    $('.dashboard-sidebar').toggleClass('active'); 
+    $('.side-overlay').toggleClass('show'); 
+    $('body').toggleClass('scroll-hide-sm'); 
+  }); 
+
+  $('.side-overlay, .dashboard-sidebar__close').on('click', function () {
+    $('.dashboard-sidebar').removeClass('active'); 
+    $('.side-overlay').removeClass('show'); 
+    $('body').removeClass('scroll-hide-sm'); 
+  }); 
+  // ========================== Dashboard Sidebar Js End =====================
+
+  // ==================== Dashboard User Profile Dropdown Start ==================
+  $('.user-profile__button').on('click', function(event) {
+    event.stopPropagation();
+    $('.user-profile-dropdown').toggleClass('show'); 
+  }); 
+
+  $('.user-profile-dropdown').on('click', function (event) {
+    event.stopPropagation();
+    $('.user-profile-dropdown').addClass('show')
+  }); 
+
+  $('body').on('click', function() {
+    $('.user-profile-dropdown').removeClass('show'); 
+  })
+// ==================== Dashboard User Profile Dropdown End ==================
+
+  // ========================== Image Upload Js Start =====================
+  function readURL(input, previewId) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+          $(previewId).css('background-image', 'url(' + e.target.result + ')');
+          $(previewId).hide();
+          $(previewId).fadeIn(650);
       }
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#imageUpload").on('change', function () {
+    readURL(this, '#imagePreview');
   });
 
-});
+  $("#imageUploadTwo").on('change', function () {
+    readURL(this, '#imagePreviewTwo');
+  });
+  // ========================== Image Upload Js End =====================
+
+  // ========================== Magnific Popup Js Start =====================
+  $('.screenshot-btn').on('click', function() {
+    var images = JSON.parse($(this).attr('data-images'));
+    var items = [];
+    
+    for (var i = 0; i < images.length; i++) {
+        items.push({
+            src: images[i],
+            type: 'image'
+        });
+    }
+    
+    $.magnificPopup.open({
+        items: items,
+        gallery: {
+            enabled: true
+        },
+        type: 'image'
+    });
+  });
+  // ========================== Magnific Popup Js End =====================
+
+  // ========================== Footer Has Class section bg Js Start =====================
+  if($('.footer').hasClass('section-bg')) {
+    $('.brand').addClass('active'); 
+    $('.footer.section-bg').addClass('active'); 
+  }
+  // ========================== Footer Has Class section bg Js End =====================
+  
+  // ========================= Scroll Spy Js Start ===========================
+  const scrollSpy = new bootstrap.ScrollSpy(document.body, {
+    target: '#sidebar-scroll-spy'
+  })
+  // ========================= Scroll Spy Js End ===========================
+
+  // ========================== Apex Chart Js Start =====================
+  var chartElement = document.querySelector("#chart");
+  if (chartElement) {
+    // Chart options
+    var options = {
+      series: [{
+      name: 'Earning: $200',
+      data: [31, 40, 28, 51, 42, 109, 100]
+    }, {
+      name: 'Downloads: 52',
+      data: [11, 32, 45, 32, 34, 52, 41]
+    }],
+    chart: {
+      height: 486,
+      type: 'area',
+    },
+    
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      curve: 'smooth',
+    },
+    xaxis: {
+      type: 'datetime',
+      categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+    },
+    tooltip: {
+      x: {
+        format: 'dd/MM/yy HH:mm'
+      },
+    },
+  };
+
+    // Create the chart
+    var chart = new ApexCharts(chartElement, options);
+    chart.render();
+  }
+  // ========================== Apex Chart Js End =====================
+
+    let lineChart = document.querySelector("#earningChart"); 
+    if(lineChart) {
+      var options = {
+        series: [{
+        name: 'series1',
+        data: [31, 40, 28, 51, 42, 109, 100]
+      }],
+        chart: {
+        height: 350,
+        type: 'line'
+      },
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'smooth'
+      },
+      xaxis: {
+        type: 'datetime',
+        categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+      },
+      tooltip: {
+        x: {
+          format: 'dd/MM/yy HH:mm'
+        },
+      },
+      };
+
+      var earingChart = new ApexCharts(lineChart, options);
+      earingChart.render();
+    }
+
+  });
+  // ==========================================
+  //      End Document Ready function
+  // ==========================================
+
+  // ========================= Preloader Js Start =====================
+    $(window).on("load", function(){
+      $('.loader-mask').fadeOut(); 
+    })
+    // ========================= Preloader Js End=====================
+
+    // ========================= Header Sticky Js Start ==============
+    $(window).on('scroll', function() {
+      if ($(window).scrollTop() >= 260) {
+        $('.header').addClass('fixed-header');
+      }
+      else {
+          $('.header').removeClass('fixed-header');
+      }
+    }); 
+    // ========================= Header Sticky Js End===================
+
+})(jQuery);

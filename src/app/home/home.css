@@ -82,3 +82,6 @@
 .view-all:hover {
     text-decoration: underline !important;
 }
+a {
+    text-decoration: none;
+}

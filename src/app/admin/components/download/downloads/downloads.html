@@ -2,6 +2,15 @@
   <div class="card-header d-flex justify-content-between align-items-center">
 
     <h3 class="card-title">Downloads List</h3>
+        <div class="input-group w-25" style="margin-left: auto;">
+      <input type="text"
+             class="form-control"
+             placeholder="Search..."
+             [(ngModel)]="searchQuery" (keyup.enter)="searchDownloads()">
+      <span class="input-group-text" (click)="searchDownloads()" style="cursor: pointer;">
+        <i class="bi bi-search"></i>
+      </span>
+    </div>
   </div>
   <div class="card-body table-responsive p-0">
     <table class="table table-hover text-nowrap">
@@ -16,7 +25,7 @@
       </thead>
 
       <tbody>
-      <tr *ngFor="let download of downloads">
+      <tr *ngFor="let download of paginatedDownloads">
 
 
 
@@ -38,5 +47,22 @@
         </tr>
       </tbody>
     </table>
+  </div>
+    <div class="card-footer d-flex justify-content-between align-items-center bg-white" *ngIf="downloads.length > 0">
+    <small class="text-muted">
+      Page {{ currentPage }} on {{ totalPages }} (Total : {{ downloads.length }} downloads)
+    </small>
+    
+    <nav aria-label="Page navigation">
+      <ul class="pagination pagination-sm mb-0">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <button class="page-link" (click)="changePage(currentPage - 1)">Previous</button>
+        </li>
+        
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <button class="page-link" (click)="changePage(currentPage + 1)">Next</button>
+        </li>
+      </ul>
+    </nav>
   </div>
 </div>

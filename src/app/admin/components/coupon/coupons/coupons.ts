@@ -33,7 +33,8 @@ export class Coupons implements OnInit {
 
   coupons: any[] = [];
     searchCouponForm!: FormGroup;
-
+ currentPage: number = 1;
+itemsPerPage: number = 6;
   displayedColumns: string[] = [
     'name',
     'code',
@@ -59,16 +60,22 @@ getAllCoupons() {
     this.cdr.detectChanges(); 
   });
 }
-  get filteredCoupons() {
-  if (!this.searchText) {
-    return this.coupons;
+ get filteredCoupons() {
+      let result = this.coupons;
+
+  // Correction de la condition : on filtre si searchText contient du texte
+  if (this.searchText && this.searchText.trim() !== '') {
+    result = this.coupons.filter(coupon =>
+      coupon.name_cpn && coupon.name_cpn
+        .toLowerCase()
+        .includes(this.searchText.toLowerCase())
+    );
   }
 
-  return this.coupons.filter(coupon =>
-    coupon.name_cpn
-      .toLowerCase()
-      .includes(this.searchText.toLowerCase())
-  );
+  // Application de la pagination directement sur la liste résultante
+  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+  return result.slice(startIndex, startIndex + this.itemsPerPage);
+  
 }
     submitForm() {
     const title = this.searchCouponForm.value.title;
@@ -86,4 +93,25 @@ getAllCoupons() {
       }
     });
   }
+        // Méthode pour obtenir la liste filtrée selon la page active
+get paginatedCoupons() {
+  const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+  return this.coupons.slice(startIndex, startIndex + this.itemsPerPage);
+}
+
+// Méthode pour obtenir le nombre total de pages
+get totalPages(): number {
+  const count = this.searchText && this.searchText.trim() !== ''
+    ? this.coupons.filter(coupon => coupon.name_cpn && coupon.name_cpn.toLowerCase().includes(this.searchText.toLowerCase())).length 
+    : this.coupons.length;
+    
+  return Math.ceil(count / this.itemsPerPage) || 1;
+}
+
+// 3. Changement de page
+changePage(page: number) {
+  if (page >= 1 && page <= this.totalPages) {
+    this.currentPage = page;
+  }
+}
 }

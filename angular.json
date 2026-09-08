@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": false
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -31,7 +32,11 @@
               "public/admin/css/adminlte.min.css",
               "public/admin/css/adminlte.rtl.css",
               "public/admin/css/adminlte.rtl.min.css",
-              "public/pubcl/css/style.css",
+              "public/pubcl/css/bootstrap.min.css",
+              "public/pubcl/css/line-awesome.min.css",
+              "public/pubcl/css/magnific-popup.css",
+              "public/pubcl/css/main.css",
+              "public/pubcl/css/slick.css",
             "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
             "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -49,8 +54,15 @@
               "public/admin/js/adminlte.js",
               "public/admin/js/adminlte.min.js",
               "public/pubcl/js/main.js",
+              "public/pubcl/js/apexchart.js",
+              "public/pubcl/js/boostrap.bundle.min.js",
+              "public/pubcl/js/countdown.js",
+              "public/pubcl/js/counterup.min.js",
+              "public/pubcl/js/jquery.magnific-popup.js",
+              "public/pubcl/js/jquery-3.7.1.min.js",
+              "public/pubcl/js/marquee.min.js",
+              "public/pubcl/js/slick.min.js",
               "node_modules/nouislider/dist/nouislider.min.js",
-              "public/pubcl/js/owl.carousel.min.js",
                "node_modules/jquery/dist/jquery.min.js"
 
             ]
@@ -60,13 +72,19 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "2mb",
+                  "maximumError": "4mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "6kb",
+                  "maximumError": "20kb"
+                },  
+                {
+                  "type": "bundle",
+                  "name": "css-inline-fonts",
+                  "maximumWarning": "30kb",
+                  "maximumError": "40kb"
                 }
               ],
               "outputHashing": "all"

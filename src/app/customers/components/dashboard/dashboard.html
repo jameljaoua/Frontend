@@ -1,70 +1,79 @@
- <div class="container my-5">
- <div class="row account-container">
-    <div class="col-lg-3 sidebar p-0">
+<section class="dashboard">
+    <div class="dashboard__inner d-flex">
         <app-customer-sidebar></app-customer-sidebar>
-    </div>
-    <div class="col-lg-9 main-content">
-                <div id="dashboard" class="page-content active">
-                    <h2 class="mb-4">My Account Dashboard</h2>
-                    
-                    <!-- Stats Cards -->
-                    <div class="row mb-5">
-                        <div class="col-md-4">
-                            <div class="card stats-card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Orders</h5>
-                                    <h2 class="card-text">{{ myOrder.length  }}</h2>
-                                    <i class="fas fa-shopping-bag card-icon text-primary"></i>
+
+        <div class="dashboard-body">
+            <div class="dashboard-body__content padding-y-60">
+                <div class="container container-two">
+                    <h4 class="mb-32">My Account Dashboard</h4>
+
+                    <!-- ==================== Stats Widget ==================== -->
+                    <div class="dashboard-body__item-wrapper mb-32">
+                        <div class="dashboard-body__item">
+                            <div class="dashboard-widget">
+                                <span class="dashboard-widget__icon">
+                                    <i class="fas fa-shopping-bag"></i>
+                                </span>
+                                <div class="dashboard-widget__content flx-between gap-1 align-items-end">
+                                    <div>
+                                        <h4 class="dashboard-widget__number mb-1 mt-3">{{ myOrder?.length || 0 }}</h4>
+                                        <span class="dashboard-widget__text font-14">Total Orders</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                    
-                    <!-- Recent Orders -->
-                    <div class="card mb-4">
-                        <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">My Orders</h5>
-                            <a href="/customer/my-orders" class="btn btn-sm btn-outline-primary">View All</a>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Order ID</th>
-                                            <th>Amount</th>
-                                            <th>Description</th>
-                                            <th>Phone</th>
-                                            <th>Date</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let order of myOrder">
-                                            <td>{{ order.id }}</td>
-                                            <td>{{ order.amount }}</td>
-                                            <td>{{ order.orderDescription }}</td>
-                                            <td>{{ order.phone }}</td>
-                                            <td>{{ order.date | date:'dd/MM/yyyy' }}</td>
-                                            <td> <ng-container [ngSwitch]="order.orderStatus">
-                                            <span *ngSwitchCase="'Pending'" class="badge bg-warning text-dark">Pending</span>
-                                            <span *ngSwitchCase="'Placed'" class="badge bg-info text-dark">Placed</span>
-                                            <span *ngSwitchCase="'Purchased'" class="badge bg-success">Purchased</span>
-                                             </ng-container></td>
-                                            <td><span *ngIf="order.orderStatus === 'Placed'"><a routerLink="/customer/ordered-products/{{ order.id }}" class="btn btn-sm btn-outline-primary">View</a></span>
-                                            <span *ngIf="order.orderStatus === 'Purchased'"><a routerLink="/customer/purchased-orders/{{ order.id }}" class="btn btn-sm btn-outline-primary">View</a></span>
-                                            </td>
-                                        </tr>
 
-                                    </tbody>
-                                </table>
-                            </div>
+                    <!-- ==================== Recent Orders Table ==================== -->
+                    <div class="dashboard-card">
+                        <div class="dashboard-card__header flx-between gap-2 mb-24">
+                            <h6 class="dashboard-card__title mb-0">My Orders</h6>
+                            <a routerLink="/customer/my-orders" class="btn btn-outline-light btn-sm pill">View All</a>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table style-two">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Amount</th>
+                                        <th>Description</th>
+                                        <th>Phone</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let order of myOrder">
+                                        <td>{{ order.id }}</td>
+                                        <td>{{ order.amount | currency }}</td>
+                                        <td>{{ order.orderDescription }}</td>
+                                        <td>{{ order.phone }}</td>
+                                        <td>{{ order.date | date:'dd/MM/yyyy' }}</td>
+                                        <td>
+                                            <ng-container [ngSwitch]="order.orderStatus">
+                                                <span *ngSwitchCase="'Pending'" class="badge bg-warning text-dark">Pending</span>
+                                                <span *ngSwitchCase="'Placed'" class="badge bg-info text-dark">Placed</span>
+                                                <span *ngSwitchCase="'Purchased'" class="badge bg-success">Purchased</span>
+                                            </ng-container>
+                                        </td>
+                                        <td>
+                                            <a *ngIf="order.orderStatus === 'Pending'" [routerLink]="['/customer/ordered-products', order.id]" class="btn btn-outline-light btn-sm pill">View</a>
+                                            <a *ngIf="order.orderStatus === 'Placed'" [routerLink]="['/customer/ordered-products', order.id]" class="btn btn-outline-light btn-sm pill">View</a>
+                                            <a *ngIf="order.orderStatus === 'Purchased'" [routerLink]="['/customer/purchased-orders', order.id]" class="btn btn-outline-light btn-sm pill">View</a>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="!myOrder || myOrder.length === 0">
+                                        <td colspan="7" class="text-center text-body py-4">Vous n'avez pas encore de commande.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                  
+
                 </div>
+            </div>
+        </div>
     </div>
- </div>
- </div>
+</section>

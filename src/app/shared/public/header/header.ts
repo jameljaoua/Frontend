@@ -7,62 +7,84 @@ import { PublicService } from '../../../services/public/public.service';
 
 @Component({
   selector: 'app-header',
-  standalone: true, // Assurez-vous que c'est bien un composant standalone
+  standalone: true,
   imports: [
-    
     CommonModule,
     RouterLink,
     RouterLinkActive,
-    FormsModule, // <--- 2. Ajoutez-le ici
+    FormsModule,
   ],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
 export class Header {
-  searchQuery: string = "";
-  selectedCategory: string = "All categories";
-  products: any[] = []; // Liste des résultats
   categories: any[] = [];
+  cartCount: number = 0;
 
-    isCustomerLoggedIn : boolean = UserStorageService.isCustomerLoggedIn();
-    isAdminLoggedIn : boolean = UserStorageService.isAdminLoggedIn();
+  isCustomerLoggedIn: boolean = UserStorageService.isCustomerLoggedIn();
+  isAdminLoggedIn: boolean = UserStorageService.isAdminLoggedIn();
 
-  
-constructor(private router: Router,private publicService: PublicService,    private cdr: ChangeDetectorRef
-) {}
-ngOnInit(): void {
-    this.router.events.subscribe(event => {
-      
-        this.isCustomerLoggedIn = UserStorageService.isCustomerLoggedIn();
-        this.isAdminLoggedIn = UserStorageService.isAdminLoggedIn();
+  isMobileMenuOpen: boolean = false;
 
-    })
+  constructor(
+    private router: Router,
+    private publicService: PublicService,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit(): void {
+    this.router.events.subscribe(() => {
+      this.isCustomerLoggedIn = UserStorageService.isCustomerLoggedIn();
+      this.isAdminLoggedIn = UserStorageService.isAdminLoggedIn();
+    });
     this.getAllCategories();
-
-}
-onSearch() {
-    if (this.selectedCategory === "All categories") {
-      // Recherche globale par titre
-      this.publicService.getAllProductsByName(this.searchQuery).subscribe(res => {
-        this.products = res;
-      });
-    } else {
-      // Recherche filtrée par catégorie (utilise l'endpoint que nous avons créé)
-      this.publicService.getProductsByCategoryName(this.selectedCategory).subscribe(res => {
-        // Optionnel : filtrez aussi par nom localement si besoin
-        this.products = res.filter((p: any) => 
-          p.nameProd.toLowerCase().includes(this.searchQuery.toLowerCase())
-        );
-      });
-    }
+    this.initDarkModeFromStorage();
   }
-    getAllCategories() {
+
+  getAllCategories() {
     this.publicService.getAllCategories().subscribe(res => {
-      this.categories = res.map((c: any) => ({
-        ...c,
-      }));
+      this.categories = res.map((c: any) => ({ ...c }));
       this.cdr.detectChanges();
     });
   }
 
- }
+  onCategoryClick(category: any) {
+    // Redirige vers /shop avec la catégorie en query param (adapte selon ta route shop)
+    this.router.navigate(['/shop'], { queryParams: { category: category.name_cat } });
+  }
+
+  openMobileMenu() {
+    this.isMobileMenuOpen = true;
+    document.body.classList.add('mobile-menu-active');
+  }
+
+  closeMobileMenu() {
+    this.isMobileMenuOpen = false;
+    document.body.classList.remove('mobile-menu-active');
+  }
+
+  toggleDarkMode() {
+    document.body.classList.toggle('dark-theme');
+    const isDark = document.body.classList.contains('dark-theme');
+    localStorage.setItem('darkMode', isDark ? '1' : '0');
+  }
+
+  private initDarkModeFromStorage() {
+    const saved = localStorage.getItem('darkMode');
+    if (saved === '1') {
+      document.body.classList.add('dark-theme');
+      // Coche la checkbox si elle existe déjà dans le DOM
+      setTimeout(() => {
+        const checkbox = document.getElementById('checkbox') as HTMLInputElement;
+        if (checkbox) checkbox.checked = true;
+      });
+    }
+  }
+
+  logout() {
+    UserStorageService.signOut();
+    this.isCustomerLoggedIn = false;
+    this.isAdminLoggedIn = false;
+    this.router.navigate(['/login']);
+  }
+}

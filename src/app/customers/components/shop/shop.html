@@ -1,204 +1,149 @@
-<!-- breadcrumbs -->
-<nav class="container mt-4 mt-sm-4 mt-md-4 mt-lg-3 d-flex flex-wrap align-items-center gap-2 px-3">
-    <div class="d-flex align-items-center gap-2">
-        <a href="/customer">
-            <svg class="text-primary" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 576 512" height="20px" width="20px" xmlns="http://www.w3.org/2000/svg">
-                <path d="M280.37 148.26L96 300.11V464a16 16 0 0 0 16 16l112.06-.29a16 16 0 0 0 15.92-16V368a16 16 0 0 1 16-16h64a16 16 0 0 1 16 16v95.64a16 16 0 0 0 16 16.05L464 480a16 16 0 0 0 16-16V300L295.67 148.26a12.19 12.19 0 0 0-15.3 0zM571.6 251.47L488 182.56V44.05a12 12 0 0 0-12-12h-56a12 12 0 0 0-12 12v72.61L318.47 43a48 48 0 0 0-61 0L4.34 251.47a12 12 0 0 0-1.6 16.9l25.5 31A12 12 0 0 0 45.15 301l235.22-193.74a12.19 12.19 0 0 1 15.3 0L530.9 301a12 12 0 0 0 16.9-1.6l25.5-31a12 12 0 0 0-1.7-16.93z"></path>
-            </svg>
-        </a>
-        <svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="text-muted ml-2" height="18px" width="18px" xmlns="http://www.w3.org/2000/svg">
-            <polyline points="9 18 15 12 9 6"></polyline>
-        </svg>
-    </div>
-    <div class="d-flex align-items-center gap-2 ml-1">
-        <a class="text-muted text-decoration-none pointer-events-none" href="/customer/shop">Shop</a>
-    </div>
-</nav>
-<!-- end breadcrumbs -->
+<!-- ==================== Breadcrumb Start ==================== -->
+<section class="breadcrumb breadcrumb-one padding-y-60 section-bg position-relative z-index-1 overflow-hidden">
+    <img src="pubcl/images/gradients/breadcrumb-gradient-bg.png" alt="" class="bg--gradient">
+    <img src="pubcl/images/shapes/element-moon3.png" alt="" class="element one">
+    <img src="pubcl/images/shapes/element-moon1.png" alt="" class="element three">
 
-<div class="shop-section">
-    <!-- section -->
-    <div class="mb-5 mt-50">
-        <!-- container -->
-        <div class="container">
-            <!-- row -->
-            <div class="row gx-10">
-                <!-- col sidebar -->
-                <div class="col-lg-3 col-md-4 mb-2 order-2 order-sm-2 order-md-2 order-lg-1">
-                    <aside class="offcanvas-lg offcanvas-start" tabindex="-1" id="filter-section" aria-labelledby="navbar-defaultLabel">
-                        <div class="offcanvas-header d-lg-none">
-                            <h2 class="fw-semibold fs-3">Filter</h2>
-                            <button type="button" class="btn-close" id="filter-section-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                        </div>
-                        <div class="offcanvas-body p-lg-0">
-                            <div class="flex-grow-1">
-                                <!-- Filtre par catégorie -->
-                                <div class="mb-4 border-bottom pb-3 filter-box-item">
-                                    <p class="mb-3 filter-title fw-semibold">Category</p>
-                                    <hr>
-                                    <div class="mt-3 filter-category">
-                                        <ul class="list-unstyled">
-                                            <li *ngFor="let category of categories" class="mb-2">
-                                                <a [routerLink]="['/customer/category-products', category.id]" class="text-decoration-none text-dark" 
-                                                   (click)="filterByCategory(category.id); $event.preventDefault()">
-                                                    {{category.name_cat}}
-                                                </a>
-                                                <span class="p-count badge bg-secondary ms-2">
-                                                    {{category.products?.length || 0}}
-                                                </span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
+    <div class="container container-two">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <div class="breadcrumb-one-content">
+                    <h3 class="breadcrumb-one-content__title text-center mb-3 text-capitalize">{{ products.length }}+ produits disponibles</h3>
+                    <p class="breadcrumb-one-content__desc text-center text-black-three">Explorez notre sélection de produits soigneusement choisis par nos experts.</p>
 
-                                <!-- NOUVEAU: Filtre par prix -->
-                                <div class="mb-4 border-bottom pb-3 filter-box-item">
-                                    <p class="mb-3 filter-title fw-semibold">Price Range</p>
-                                    <hr>
-                                    <div class="mt-3">
-                                        <!-- Afficher la plage de prix actuelle -->
-                                        <div class="d-flex justify-content-between mb-3">
-                                            <span class="badge bg-primary">Min: {{minPrice | currency}}</span>
-                                            <span class="badge bg-primary">Max: {{maxPrice | currency}}</span>
-                                        </div>
-                                        
-                                        <!-- Slider simple (version input range) -->
-                                        <div class="price-slider-container mb-4">
-                                            <label class="form-label">Min Price: {{minPrice | currency}}</label>
-                                            <input type="range" 
-                                                   class="form-range" 
-                                                   [min]="actualMinPrice" 
-                                                   [max]="actualMaxPrice" 
-                                                   [value]="minPrice"
-                                                   (input)="updateMinPrice($event)">
-                                            
-                                            <label class="form-label mt-3">Max Price: {{maxPrice | currency}}</label>
-                                            <input type="range" 
-                                                   class="form-range" 
-                                                   [min]="actualMinPrice" 
-                                                   [max]="actualMaxPrice" 
-                                                   [value]="maxPrice"
-                                                   (input)="updateMaxPrice($event)">
-                                        </div>
-
-                                        <!-- Version avec champs de saisie -->
-                                        <div class="row g-2 mb-3">
-                                            <div class="col-6">
-                                                <label class="form-label small">Min ($)</label>
-                                                <input type="number" 
-                                                       class="form-control form-control-sm" 
-                                                       [(ngModel)]="minPrice"
-                                                       [min]="actualMinPrice" 
-                                                       [max]="maxPrice"
-                                                       (change)="filterByPrice()">
-                                            </div>
-                                            <div class="col-6">
-                                                <label class="form-label small">Max ($)</label>
-                                                <input type="number" 
-                                                       class="form-control form-control-sm" 
-                                                       [(ngModel)]="maxPrice"
-                                                       [min]="minPrice" 
-                                                       [max]="actualMaxPrice"
-                                                       (change)="filterByPrice()">
-                                            </div>
-                                        </div>
-
-                                        <!-- Boutons d'action -->
-                                        <div class="d-grid gap-2">
-                                            <button class="btn btn-primary btn-sm" (click)="filterByPrice()">
-                                                <i class="bi bi-filter me-1"></i>Apply Filter
-                                            </button>
-                                            <button class="btn btn-outline-secondary btn-sm" (click)="resetPriceFilter()">
-                                                <i class="bi bi-arrow-counterclockwise me-1"></i>Reset
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Indicateur de filtres actifs -->
-                                <div class="mb-3" *ngIf="minPrice > actualMinPrice || maxPrice < actualMaxPrice">
-                                    <div class="alert alert-info py-2 small">
-                                        <i class="bi bi-info-circle me-1"></i>
-                                        Active filters: 
-                                        <span class="badge bg-light text-dark ms-1">
-                                            ${{minPrice}} - ${{maxPrice}}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </aside>
-                </div>
-
-                <!-- section produits -->
-                <section class="col-lg-9 col-md-12 order-1 order-sm-1 order-md-1 order-lg-2">
-                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mt-2">
-                        <div class="mb-3 mb-md-0">
-                            <p class="mb-0">
-                                There are <strong>{{filteredProducts.length}}</strong> products
-                                <span *ngIf="minPrice > actualMinPrice || maxPrice < actualMaxPrice" class="text-muted ms-2">
-                                    (filtered)
-                                </span>
-                            </p>
-                        </div>
-                        
-                        <!-- Tri (optionnel) -->
-                        <div class="d-flex gap-2">
-                            <select class="form-select form-select-sm" style="width: auto;">
-                                <option selected>Sort by: Default</option>
-                                <option>Price: Low to High</option>
-                                <option>Price: High to Low</option>
-                                <option>Name: A to Z</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="product mt-4">
-                        <div class="row row-cols-xl-3 row-cols-lg-3 row-cols-2 row-cols-md-2 mt-1">
-                            <div class="col mb-3" *ngFor="let product of filteredProducts">
-                                <div class="product-card">
-                                    <a [routerLink]="['/customer/single-product', product.id]">
-                                        <img [src]="product.processedImg" 
-                                             class="img-fluid mb-2 product-img" 
-                                             style="align-content: center; height: 150px; object-fit: contain;" 
-                                             alt="product" 
-                                             onerror="this.src='pubcl/images/placeholder.jpg'">
-                                    </a>
-                                    <h6><a [routerLink]="['/customer/single-product', product.id]">{{product.name_prod}}</a></h6>
-                                    <div>
-                                        <span class="price">{{product.price | currency}}</span>
-                                    </div>
-                                <button class="btn btn-primary w-100 btn-sm" (click)="addToCart(product.id)">
-                                    Add to Cart
-                                </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Message si aucun produit -->
-                    <div class="text-center py-5" *ngIf="filteredProducts.length === 0">
-                        <i class="bi bi-filter-circle text-muted" style="font-size: 3rem;"></i>
-                        <h5 class="mt-3">No products match your filters</h5>
-                        <p class="text-muted">Try adjusting your price range</p>
-                        <button class="btn btn-primary" (click)="resetPriceFilter()">
-                            Clear Filters
+                    <div class="search-box">
+                        <input type="text" class="common-input common-input--lg pill shadow-sm" placeholder="Rechercher un produit..."
+                               [(ngModel)]="searchTerm" (keyup.enter)="filterBySearch()">
+                        <button type="button" class="btn btn-main btn-icon icon border-0" (click)="filterBySearch()">
+                            <img src="pubcl/images/icons/search.svg" alt="">
                         </button>
                     </div>
-                    
-                    <!-- Pagination -->
-                    <div class="row mb-5 my-5" *ngIf="filteredProducts.length > 0">
-                        <div class="col-lg-12">
-                            <div class="my-4 border rounded d-flex p-3 align-items-center justify-content-between">
-
-                                <div class="d-none d-lg-flex text-right mr-3">
-                                    Showing 1 - {{filteredProducts.length}} of {{filteredProducts.length}} items
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+<!-- ==================== Breadcrumb End ==================== -->
+
+<!-- ==================== All Product Section Start ==================== -->
+<section class="all-product padding-y-120">
+    <div class="container container-two">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="filter-tab gap-3 flx-between">
+                    <button type="button" class="filter-tab__button btn btn-outline-light pill d-flex align-items-center" (click)="toggleSidebar()">
+                        <span class="icon icon-left"><img src="pubcl/images/icons/filter.svg" alt=""></span>
+                        <span class="font-18 fw-500">Filtres</span>
+                    </button>
+
+                    <p class="mb-0 ms-lg-auto">
+                        <strong>{{ filteredProducts.length }}</strong> produit(s)
+                        <span *ngIf="minPrice > actualMinPrice || maxPrice < actualMaxPrice || selectedCategoryId" class="text-body ms-1">(filtré)</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Sidebar filtres -->
+            <div class="col-xl-3 col-lg-4">
+                <div class="filter-sidebar" [class.active]="sidebarOpen">
+                    <button type="button" class="filter-sidebar__close p-2 position-absolute end-0 top-0 z-index-1 text-body hover-text-main font-20 d-lg-none d-block" (click)="toggleSidebar()">
+                        <i class="las la-times"></i>
+                    </button>
+
+                    <!-- Filtre catégorie -->
+                    <div class="filter-sidebar__item">
+                        <button type="button" class="filter-sidebar__button font-16 text-capitalize fw-500">Category</button>
+                        <div class="filter-sidebar__content">
+                            <ul class="filter-sidebar-list">
+                                <li class="filter-sidebar-list__item">
+                                    <a href="javascript:void(0)" class="filter-sidebar-list__text" [class.active]="!selectedCategoryId" (click)="filterByCategory(null)">
+                                        All Categories <span class="qty">{{ products.length }}</span>
+                                    </a>
+                                </li>
+                                <li class="filter-sidebar-list__item" *ngFor="let category of categories">
+                                    <a href="javascript:void(0)" class="filter-sidebar-list__text" [class.active]="selectedCategoryId === category.id" (click)="filterByCategory(category.id)">
+                                        {{ category.name_cat }} <span class="qty">{{ category.products?.length || 0 }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Filtre prix -->
+                    <div class="filter-sidebar__item">
+                        <button type="button" class="filter-sidebar__button font-16 text-capitalize fw-500">Price Range</button>
+                        <div class="filter-sidebar__content">
+                            <div class="d-flex justify-content-between mb-3">
+                                <span class="badge bg-main">Min: {{ minPrice | currency }}</span>
+                                <span class="badge bg-main">Max: {{ maxPrice | currency }}</span>
+                            </div>
+
+                            <label class="form-label font-14">Min Price</label>
+                            <input type="range" class="form-range" [min]="actualMinPrice" [max]="actualMaxPrice" [value]="minPrice" (input)="updateMinPrice($event)">
+
+                            <label class="form-label font-14 mt-3">Max Price</label>
+                            <input type="range" class="form-range" [min]="actualMinPrice" [max]="actualMaxPrice" [value]="maxPrice" (input)="updateMaxPrice($event)">
+
+                            <div class="d-grid gap-2 mt-3">
+                                <button class="btn btn-main btn-sm pill" (click)="filterByPrice()">Apply Filter</button>
+                                <button class="btn btn-outline-light btn-sm pill" (click)="resetPriceFilter()">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grille produits -->
+            <div class="col-xl-9 col-lg-8">
+                <div class="row gy-4 list-grid-wrapper">
+                    <div class="col-xl-4 col-sm-6" *ngFor="let product of filteredProducts">
+                        <div class="product-item section-bg">
+                            <div class="product-item__thumb d-flex">
+                                <a [routerLink]="['/customer/single-product', product.id]" class="link w-100">
+                                    <img [src]="product.processedImg" class="cover-img" [alt]="product.name_prod"
+                                         onerror="this.src='pubcl/images/thumbs/product-placeholder.png'">
+                                </a>
+                                <button type="button" class="product-item__wishlist"><i class="fas fa-heart"></i></button>
+                            </div>
+                            <div class="product-item__content">
+                                <h6 class="product-item__title">
+                                    <a [routerLink]="['/customer/single-product', product.id]" class="link">{{ product.name_prod }}</a>
+                                </h6>
+                                <div class="product-item__info flx-between gap-2">
+                                    <span class="product-item__author" *ngIf="product.categoryName">{{ product.categoryName }}</span>
+                                    <div class="flx-align gap-2">
+                                        <h6 class="product-item__price mb-0">{{ product.price | currency }}</h6>
+                                    </div>
+                                </div>
+                                <div class="product-item__bottom flx-between gap-2">
+                                    <div class="d-flex align-items-center gap-1">
+                                        <ul class="star-rating">
+                                            <li class="star-rating__item font-11" *ngFor="let s of [1,2,3,4,5]"><i class="fas fa-star"></i></li>
+                                        </ul>
+                                    </div>
+                                    <button class="btn btn-outline-light btn-sm pill" (click)="addToCart(product.id)">
+                                        <i class="fas fa-shopping-cart me-1"></i>Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Message si aucun produit -->
+                <div class="text-center py-5" *ngIf="filteredProducts.length === 0">
+                    <i class="bi bi-filter-circle text-muted" style="font-size: 3rem;"></i>
+                    <h5 class="mt-3">Aucun produit ne correspond à vos filtres</h5>
+                    <p class="text-muted">Essayez d'ajuster votre recherche ou votre plage de prix</p>
+                    <button class="btn btn-main pill" (click)="resetPriceFilter()">Réinitialiser les filtres</button>
+                </div>
+
+                <!-- Info pagination (statique pour le moment) -->
+                <div class="mt-4" *ngIf="filteredProducts.length > 0">
+                    <p class="text-body">Showing 1 - {{ filteredProducts.length }} of {{ filteredProducts.length }} items</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ==================== All Product Section End ==================== -->

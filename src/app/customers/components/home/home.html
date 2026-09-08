@@ -1,104 +1,148 @@
-<div class="feature-section mt-60">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="white-bg border px-4 py-3">
-                    <div class="row">
-                        <div class="mb-20 col-12 col-sm-12 col-md-6 col-lg-3">
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <img src="pubcl/images/icon/delivery-truck.png" class="w-100" alt="truck Icon">
-                                </div>
-                                <div class="feature-info pt-3 ps-2">
-                                    <h4>Instant Delivary</h4>
-                                    <p>After payment, access to the product &nbsp;<strong>is immediate</strong></p>
-                                </div>
-                            </div>
-                        </div>
+<!-- ==================== Hero Section Start ==================== -->
+<section class="hero section-bg z-index-1">
+    <img src="pubcl/images/gradients/banner-gradient.png" alt="" class="bg--gradient white-version">
+    <img src="pubcl/images/shapes/element-moon1.png" alt="" class="element one">
+    <img src="pubcl/images/shapes/element-moon2.png" alt="" class="element two">
 
-                        <div class="mb-20 col-12 col-sm-12 col-md-6 col-lg-3">
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <img src="pubcl/images/icon/credit-card.png" class="w-100" alt="truck Icon">
-                                </div>
-                                <div class="feature-info pt-3 ps-2">
-                                    <h4>Secure Checkout</h4>
-                                    <p>100% Payment Secure.</p>
-                                </div>
-                            </div>
+    <div class="container container-two">
+        <div class="row align-items-center gy-sm-5 gy-4">
+            <div class="col-lg-6">
+                <div class="hero-inner position-relative pe-lg-5">
+                    <h1 class="hero-inner__title">Discover Our Top Digital Products</h1>
+                    <p class="hero-inner__desc font-18">Explore our carefully selected range of digital products. Find the perfect item today.</p>
+
+                    <div class="position-relative">
+                        <div class="search-box">
+                            <input type="text" class="common-input common-input--lg pill shadow-sm" placeholder="Search for a product..."
+                                   [(ngModel)]="searchQuery" (keyup.enter)="onSearch()">
+                            <button type="submit" class="btn btn-main btn-icon icon border-0" (click)="onSearch()">
+                                <img src="pubcl/images/icons/search.svg" alt="">
+                            </button>
                         </div>
-                        <div class="mb-20 col-12 col-sm-12 col-md-6 col-lg-3">
-                            <div class="feature-item">
-                                <div class="feature-icon">
-                                    <img src="pubcl/images/icon/customer-service.png" class="w-100" alt="truck Icon">
-                                </div>
-                                <div class="feature-info pt-3 ps-2">
-                                    <h4>Online Support</h4>
-                                    <p>Ensure the product quality</p>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-thumb">
+                    <img src="pubcl/images/thumbs/banner-img.png" alt="">
+                    <img src="pubcl/images/shapes/dots.png" alt="" class="dotted-img white-version">
+
+                    <div class="statistics animation bg-main text-center">
+                        <h5 class="statistics__amount text-white">{{ allProducts.length }}+</h5>
+                        <span class="statistics__text text-white font-14">Products</span>
+                    </div>
+
+                    <div class="statistics style-two bg-white text-center">
+                        <h5 class="statistics__amount statistics__amount-two text-heading">{{ categories.length }}</h5>
+                        <span class="statistics__text text-heading font-14">Categories</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+<!-- ==================== Hero Section End ==================== -->
 
-<div class="category-list mt-60">
-    <div class="container">
-  
+<!-- ==================== Popular Categories Start ==================== -->
+<section class="popular padding-y-120 overflow-hidden" *ngIf="categories.length > 0">
+    <div class="container container-two">
+        <div class="section-heading style-left mb-64">
+            <h5 class="section-heading__title">Popular Categories</h5>
+        </div>
 
-        <!-- Categories Carousel avec ngx-owl-carousel-o -->
-        <owl-carousel-o [options]="customOptions" *ngIf="categories.length > 0">
+        <owl-carousel-o [options]="popularCategoryOptions">
             <ng-container *ngFor="let category of categories">
                 <ng-template carouselSlide>
-                    <div class="item">
-                        <a [routerLink]="['/customer/category-products', category.id]" class="text-decoration-none">
-                            <div class="category-title d-flex justify-content-center align-items-center">
-                                <p class="text-nowrap mt-2 fw-normal text-black">{{ category.name_cat }}</p>
-                            </div>
-                        </a>
-                    </div>
+                    <a [routerLink]="['/customer/category-products', category.id]" class="popular-item w-100">
+                        <span class="popular-item__icon">
+                            <img src="pubcl/images/icons/popular-icon1.svg" alt="">
+                        </span>
+                        <h6 class="popular-item__title font-18">{{ category.name_cat }}</h6>
+                        <span class="popular-item__qty text-body">{{ category.products?.length || 0 }} produits</span>
+                    </a>
                 </ng-template>
             </ng-container>
         </owl-carousel-o>
-
     </div>
-</div>
-<div class="container mt-60">
-    <div class="row g-3">
-        <!-- Boucle sur les catégories -->
-        <div class="col-md-12" *ngFor="let category of categories">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="mb-0 section-title">{{ category.name_cat }}</h5>
-                <a [routerLink]="['/customer/category-products', category.id]" class="text-decoration-none view-all">View All</a>
+</section>
+<!-- ==================== Popular Categories End ==================== -->
+
+<!-- ==================== Arrival Products Start ==================== -->
+<section class="arrival-product padding-y-120 section-bg position-relative z-index-1">
+    <img src="pubcl/images/gradients/product-gradient.png" alt="" class="bg--gradient white-version">
+    <img src="pubcl/images/shapes/element2.png" alt="" class="element one">
+
+    <div class="container container-two">
+        <div class="section-heading">
+            <h3 class="section-heading__title">Our Products</h3>
+        </div>
+
+        <ul class="nav common-tab justify-content-center nav-pills mb-48" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" [attr.data-bs-target]="'#pills-all'" data-bs-toggle="pill" type="button" role="tab">All Item</button>
+            </li>
+            <li class="nav-item" role="presentation" *ngFor="let category of categories">
+                <button class="nav-link" [attr.data-bs-target]="'#pills-cat-' + category.id" data-bs-toggle="pill" type="button" role="tab">
+                    {{ category.name_cat }}
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-all" role="tabpanel">
+                <div class="row gy-4">
+                    <div class="col-xl-3 col-lg-4 col-sm-6" *ngFor="let product of allProducts">
+                        <ng-container *ngTemplateOutlet="productCard; context: { product: product }"></ng-container>
+                    </div>
+                </div>
+                <p class="text-center py-5" *ngIf="allProducts.length === 0">Aucun produit disponible pour le moment.</p>
             </div>
-            
-            <!-- Carousel de produits pour cette catégorie -->
-         <div *ngIf="category.products && category.products.length > 0;">
 
-            <owl-carousel-o [options]="productCarouselOptions">
-                <ng-container *ngFor="let product of category.products">
-                    <ng-template carouselSlide>
-                        <div class="product-card">
-                            
-                            <img [src]="product.processedImg"  style="align-content: center;"  class="img-fluid mb-2 product-img" 
-                                         [alt]="product.name_prod">
-
-                            <h6><a [routerLink]="['/customer/single-product', product.id]">{{ product.name_prod }}</a></h6>
-                            <div>
-                                <span class="price">{{ product.price | currency }}</span>
-                            </div>
-                        <button class="btn btn-primary w-100 btn-sm" (click)="addToCart(product.id)">
-                            Add to Cart
-                        </button>
-                        </div>
-                    </ng-template>
-                </ng-container>
-            </owl-carousel-o>
-           </div> 
- 
+            <div class="tab-pane fade" [id]="'pills-cat-' + category.id" role="tabpanel" *ngFor="let category of categories">
+                <div class="row gy-4">
+                    <div class="col-xl-3 col-lg-4 col-sm-6" *ngFor="let product of category.products">
+                        <ng-container *ngTemplateOutlet="productCard; context: { product: product }"></ng-container>
+                    </div>
+                </div>
+                <p class="text-center py-5" *ngIf="!category.products || category.products.length === 0">Aucun produit dans cette catégorie.</p>
+            </div>
         </div>
     </div>
-</div>
+</section>
+<!-- ==================== Arrival Products End ==================== -->
+
+<!-- Template réutilisable pour une carte produit -->
+<ng-template #productCard let-product="product">
+    <div class="product-item">
+        <div class="product-item__thumb d-flex">
+            <a [routerLink]="['/customer/single-product', product.id]" class="link w-100">
+                <img [src]="product.processedImg || 'pubcl/images/thumbs/product-placeholder.png'"
+                     [alt]="product.name_prod" class="cover-img">
+            </a>
+            <button type="button" class="product-item__wishlist"><i class="fas fa-heart"></i></button>
+        </div>
+        <div class="product-item__content">
+            <h6 class="product-item__title">
+                <a [routerLink]="['/customer/single-product', product.id]" class="link">{{ product.name_prod }}</a>
+            </h6>
+            <div class="product-item__info flx-between gap-2">
+                <span class="product-item__author" *ngIf="product.categoryName">{{ product.categoryName }}</span>
+                <div class="flx-align gap-2">
+                    <h6 class="product-item__price mb-0">{{ product.price | currency }}</h6>
+                </div>
+            </div>
+            <div class="product-item__bottom flx-between gap-2">
+                <div class="d-flex align-items-center gap-1">
+                    <ul class="star-rating">
+                        <li class="star-rating__item font-11" *ngFor="let s of [1,2,3,4,5]"><i class="fas fa-star"></i></li>
+                    </ul>
+                </div>
+                <button class="btn btn-outline-light btn-sm pill" (click)="addToCart(product.id)">
+                    <i class="fas fa-shopping-cart me-1"></i>Add to Cart
+                </button>
+            </div>
+        </div>
+    </div>
+</ng-template>
